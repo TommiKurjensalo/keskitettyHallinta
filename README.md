@@ -12,3 +12,5 @@ $ git config --global credential.helper "cache --timeout=3600"
 $ git clone https://github.com/TommiKurjensalo/keskitettyHallinta.git
 
 $ cd keskitettyHallinta/
+
+$ git add modules/ && git commit; git pull && git push
