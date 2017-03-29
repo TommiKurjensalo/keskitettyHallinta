@@ -1,3 +1,5 @@
+# Kotitehtävä 1
+
 Katsoin esimerkin kuinka voidaan käyttää muita resursseja kuin file käyttäen hyödykseni puppetcookbook sivustoa.
 
 Jouduin lisäämään package resurssiin allowcdrom => "true" attribuutin, koska liveUSB:n käyttö vaatii sitä.
@@ -36,3 +38,6 @@ Koodi:
 }
 ```
 
+    Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
+
+    Pohjana Tero Karvinen 2017: Palvelinten hallinta, http://terokarvinen.com
