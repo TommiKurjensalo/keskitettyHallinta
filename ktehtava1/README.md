@@ -29,7 +29,7 @@ Koodi:
 
         # Luodaan tiedosto /tmp/ktehtava1, tarkistetaan onko tiedosto jo olemassa.                
         # Sisältöön lisätään Timestamp: yyyymmdd_hh:mm:ss
-        # Jos tiedosto on jo olemassa, tehdään siitä backup muotoon ktehtava.puppet-bak
+        # Jos tiedosto on jo olemassa, tehdään siitä backup muotoon ktehtava1.puppet-bak
         file { '/tmp/ktehtava1':
                 ensure => "present",
                 content => "Timestamp: ${timestamp}",
