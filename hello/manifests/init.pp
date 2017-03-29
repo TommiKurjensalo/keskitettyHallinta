@@ -1,7 +1,7 @@
 class hello {
 	file { '/tmp/helloModule':
 		content => "Hello World!\n",
-		checksum => "sha256",
+		checksum => "md5",
 		mode => "0774"
 	}
 }
