@@ -13,4 +13,4 @@ $ git clone https://github.com/TommiKurjensalo/keskitettyHallinta.git
 
 $ cd keskitettyHallinta/
 
-$ git add modules/ && git commit; git pull && git push
+$ git add . && git commit; git pull && git push
