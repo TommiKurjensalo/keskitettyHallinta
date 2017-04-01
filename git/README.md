@@ -1,6 +1,6 @@
 # Lisätehtävä 1 - Asenna ja määrittele jokin hyödyllinen ohjelma
 
-Käytin alustana [Oracle VM VirtualBox] (https://www.virtualbox.org/) v5.1.18 virtuaaliympäristössä toimivaa [Xubuntu 16.10 32bit] (http://se.archive.ubuntu.com/mirror/cdimage.ubuntu.com/xubuntu/releases/16.10/release/) versiota.
+Käytin alustana Oracle VM VirtualBox https://www.virtualbox.org/ v5.1.18 virtuaaliympäristössä toimivaa Xubuntu 16.10 32bit http://se.archive.ubuntu.com/mirror/cdimage.ubuntu.com/xubuntu/releases/16.10/release/ versiota.
 
 Päätin asentaa git:in, koska sitä tulen aina tarvitsemaan koulussa tunneilla, kun käytän Xubuntua live-tilassa.
 
