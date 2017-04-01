@@ -1,18 +1,20 @@
-# Kotitehtävä 1
+# Kotitehtävä 1 - Tee moduuli, joka käyttää ainakin kahta eri resurssia
 
 Katsoin esimerkin kuinka voidaan käyttää muita resursseja kuin file käyttäen hyödykseni puppetcookbook sivustoa.
 
-Jouduin lisäämään package resurssiin allowcdrom => "true" attribuutin, koska liveUSB:n käyttö vaatii sitä.
+Päätin ottaa package resurssin, jolla pystyn asentemaan halutun paketin.
+Jouduin lisäämään package resurssiin `allowcdrom => "true"` attribuutin, koska live tilassa ei voi muuten asentaa paketteja.
 
-Lähde: https://www.puppetcookbook.com/posts/install-package.html
+Puppet CookBook 2015. Install a package. Lähde: https://www.puppetcookbook.com/posts/install-package.html
 
 
 Halusin luoda file resurssiin jotain muuta kuin content attribuutin, jotenka etsin sopivia vaihtoehtoja
-ja esimerkkejä docs.puppet.com sivulta.
+ja esimerkkejä [Puppet Documentation] (https://docs.puppet.com) sivulta.
 
-Lähde: https://docs.puppet.com/puppet/latest/type.html#file
+Puppet 4.9 reference manual 2017. Resource Type Reference (Single-Page). File resource. Lähde: https://docs.puppet.com/puppet/latest/type.html#file
 
-Koodi:
+
+init.pp:
 
 ```class ktehtava1 {
 
