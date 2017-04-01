@@ -5,13 +5,13 @@ Katsoin esimerkin kuinka voidaan käyttää muita resursseja kuin file käyttäe
 Päätin ottaa package resurssin, jolla pystyn asentemaan halutun paketin.
 Jouduin lisäämään package resurssiin `allowcdrom => "true"` attribuutin, koska live tilassa ei voi muuten asentaa paketteja.
 
-Puppet CookBook 2015. Install a package. Lähde: https://www.puppetcookbook.com/posts/install-package.html
+**Puppet CookBook 2015. Install a package. Lähde: https://www.puppetcookbook.com/posts/install-package.html**
 
 
 Halusin luoda file resurssiin jotain muuta kuin content attribuutin, jotenka etsin sopivia vaihtoehtoja
 ja esimerkkejä [Puppet Documentation] (https://docs.puppet.com) sivulta.
 
-Puppet 4.9 reference manual 2017. Resource Type Reference (Single-Page). File resource. Lähde: https://docs.puppet.com/puppet/latest/type.html#file
+**Puppet 4.9 reference manual 2017. Resource Type Reference (Single-Page). File resource. Lähde: https://docs.puppet.com/puppet/latest/type.html#file**
 
 
 init.pp:
