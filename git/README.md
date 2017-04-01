@@ -6,6 +6,8 @@ Päätin asentaa git:in, koska sitä tulen aina tarvitsemaan koulussa tunneilla,
 
 Aloittelin noin 19 aikoihin ja 23 jälkeen lopettelin. Osa ajasta kului siihen, kun ensin loin virtuaaliympäristön. Siihen ei tosin kulunnut pahemmin aikaa, mitä nyt kestää kun ladataan .iso image, virtualbox ja asennetaan Xubuntu.
 
+Tätäkin kirjoitusta kun tein myös jälkikäteen, niin kaikessa muokkaamisessa ja testaamisessa meni yhteensä noin 2 tuntia.
+
 Etsiskelin ja testailin useamman tunnin kuinka määrittelytiedosto voidaan näppärästi kopioida kotihakemistoon. Törmäsin testeissäni seuraaviin ongelmiin.
 
 - Kuinka saada selville haluttu käyttäjä, jonka kotihakemistoon asetus määritellään?
