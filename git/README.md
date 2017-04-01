@@ -34,22 +34,47 @@ Halusin saavuttaa tilanteen, jossa tiedosto kopioidaan pakotetusti kotihakemisto
 ```
 class git {
 
+	# Haetaan paketti git ja asennetaan se.
 	package { git:
 		ensure => "installed",
 	}
 
-	file { "/home/insp/.gitconfig":
+	# Määritetään käyttäjänimi $username muuttujalle
+	$username = "xubuntu"
+	
+	# Kopioidaan halutun käyttäjän kotihakemiston .gitconfig määrittelytiedosto
+	# Muutetaan tiedoston oikeudet samalle käyttäjälle
+	file { "/home/${username}/.gitconfig":
 		ensure => "file",
 		replace => "true",
 		purge => "true",
 		mode => "0644",
-		owner => "insp",
-		group => "insp",
+		owner => "$username",
+		group => "$username",
 		source => "file:///etc/puppet/modules/git/files/git_config",
 	}
 
 }
 ```
+
+Ps. Jos et jaksa aina kirjoittaa samoja käskyjä uudelleen, esimerkiksi `sudo puppet apply -e 'class {"moduuli":}'` niin voit luoda näppäriä aliaksia.
+
+Ainakin omassa koneessani on automaationa rivi ~/.bashrc tiedostossa, joka etsii ~/.bash_aliases tiedostoa ja lataa sen jos se löytyy. Loin siis tiedoston käskyllä `nano ~/.bash_aliases` ja lisäsin sinne muutaman rivin.
+
+```
+# File: $HOME/.bash_aliases
+# Omat aliakset
+
+alias gclone='git clone https://github.com/TommiKurjensalo/keskitettyHallinta.git'
+alias gpush='git add . && git commit; git pull && git push'
+function apuppet () {
+	sudo puppet apply -e 'class {"'$1'":}' 
+}
+```
+
+Nyt pystyn käskyllä `gclone` kloonaamaan helposti github tiedostot, käsky `gpush` taas lisää nykyisen kansion git päivityslistaan, ajaa commitin, noutaa nykyiset tiedostot githubista ja lähettää omat tietoni githubiin.
+
+Loin vielä funktion nimeltä `apuppet`, jolla säästyy tuo puppet apply.. käskyn koko litanian kirjoitus. Nyt minun pitää vain kirjoittaa `apuppet <moduulinimi>` ja homma toimii.
 
 Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
 
