@@ -61,6 +61,8 @@ Ps. Jos et jaksa aina kirjoittaa samoja käskyjä uudelleen, esimerkiksi `sudo p
 
 Ainakin omassa koneessani on automaationa rivi ~/.bashrc tiedostossa, joka etsii ~/.bash_aliases tiedostoa ja lataa sen jos se löytyy. Loin siis tiedoston käskyllä `nano ~/.bash_aliases` ja lisäsin sinne muutaman rivin.
 
+**DigitalOcean 2014. An Introduction to Useful Bash Aliases and Functions. Lähde: https://www.digitalocean.com/community/tutorials/an-introduction-to-useful-bash-aliases-and-functions**
+
 ```
 # File: $HOME/.bash_aliases
 # Omat aliakset
