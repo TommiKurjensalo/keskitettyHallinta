@@ -22,7 +22,7 @@ Halusin saada tehtyä tiedoston sisältöön jonkun muuttuvan määreen, jolla p
 
 
 
-/etc/puppet/modules/ktehtava1/manifests/init.pp:
+Koodi: /etc/puppet/modules/ktehtava1/manifests/init.pp
 
 ```class ktehtava1 {
 
