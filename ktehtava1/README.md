@@ -21,7 +21,8 @@ Halusin saada tehtyä tiedoston sisältöön jonkun muuttuvan määreen, jolla p
 **Puppet Questions 2013. Date and timestamp with directory. Lähde: https://ask.puppet.com/question/739/date-and-time-stamp-with-directory/**
 
 
-init.pp:
+
+/etc/puppet/modules/ktehtava1/manifests/init.pp:
 
 ```class ktehtava1 {
 
