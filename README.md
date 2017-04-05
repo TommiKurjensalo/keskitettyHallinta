@@ -14,3 +14,9 @@ $ git clone https://github.com/TommiKurjensalo/keskitettyHallinta.git
 $ cd keskitettyHallinta/
 
 $ git add . && git commit; git pull && git push
+
+## puppet.conf
+
+Lisää basemodulepath `[main]` lohkoon, jotta `--modulepath` syntaksia ei tarvitse käyttää.
+
+`basemodulepath = $confdir/modules:/etc/puppet/modules`
