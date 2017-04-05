@@ -5,19 +5,10 @@ class git {
 		ensure => "installed",
 	}
 
-	# Määritetään käyttäjänimi $username muuttujalle
-	$username = "xubuntu"
-	
-	# Kopioidaan halutun käyttäjän kotihakemiston .gitconfig määrittelytiedosto
-	# Muutetaan tiedoston oikeudet samalle käyttäjälle
-	file { "/home/${username}/.gitconfig":
+	# Kopioidaan globaalit git asetukset /etc/gitconfig tiedostoon
+	file { "/etc/gitconfig":
 		ensure => "file",
-		replace => "true",
-		purge => "true",
-		mode => "0644",
-		owner => "$username",
-		group => "$username",
-		source => "file:///etc/puppet/modules/git/files/git_config",
+		content => template('git/gitconfig.erb'),
 	}
 
 }
