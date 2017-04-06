@@ -6,7 +6,7 @@ class git {
 	}
 
 	# Määritetään käyttäjänimi $username muuttujalle
-	$username = "xubuntu"
+	$username = "insp"
 	
 	# Kopioidaan halutun käyttäjän kotihakemiston .gitconfig määrittelytiedosto
 	# Muutetaan tiedoston oikeudet samalle käyttäjälle
