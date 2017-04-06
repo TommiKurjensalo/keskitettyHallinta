@@ -1,6 +1,6 @@
 # Kotitehtävä 1 - Tee moduuli, joka käyttää ainakin kahta eri resurssia
 
-Käytin alustana Haaga-Helian Pasilan luokkaa 5004, koska kirjoitin tätä raporttia tarkemmin jälkikäteen, en enää enää muista koneen numeroa. Käyttöjärjestelmänä toimi Xubuntu 14.10, joka pyöri usb-tikulta live-tilassa.
+Käytin alustana Haaga-Helian Pasilan luokkaa 5004 PC 15, koska kirjoitin tätä raporttia tarkemmin jälkikäteen, en enää enää muista koneen numeroa. Käyttöjärjestelmänä toimi Xubuntu 14.10, joka pyöri usb-tikulta live-tilassa.
 
 Aloitin testailun 29.3.2017 noin kello 13 ja lopettelin noin 15 aikoihin.
 

@@ -1,6 +1,0 @@
-[user]
-	name = "Tommi Kurjensalo"
-	email = "tommi.kurjensalo@myy.haaga-helia.fi"
-[credential]
-	helper = cache --timeout=3600
-

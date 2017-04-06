@@ -2,7 +2,7 @@
 
 Testasin yksinkertaisen moduulin luontia, joka tekee jotain muuta kuin käyttää hyödykseen file toimintoa.
 
-Harjoitus tehtiin Haaga-Helia Pasilan luokassa 5004. Käyttöjärjestelmänä toimi Xubuntu 14.10, joka pyöri usb-tikulta live-tilassa.
+Harjoitus tehtiin Haaga-Helia Pasilan luokassa 5004 PC 15. Käyttöjärjestelmänä toimi Xubuntu 14.10, joka pyöri usb-tikulta live-tilassa.
 
 **Puppet 4.9 reference manual 2017. Resource Type Reference (Single-Page). Package resource. Lähde: https://docs.puppet.com/puppet/latest/type.html#package**
 
