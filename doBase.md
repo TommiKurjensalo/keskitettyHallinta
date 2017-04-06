@@ -14,6 +14,13 @@ Lataa tiedosto githubista komennolla:
 `$ wget https://raw.githubusercontent.com/TommiKurjensalo/keskitettyHallinta/master/doBase.sh`
 
 Lisää tiedostoon ajo-oikeudet: 
+
 `$ chmod u+x doBase.sh` 
+
 tai 
+
 `$ chmod 0744 doBase.sh`
+
+Lopuksi suoritetaan komento:
+
+`$ ./doBase.sh`
