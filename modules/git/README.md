@@ -25,19 +25,17 @@ Lopuksi päädyin ratkaisuun, jossa vain yksinkertaisesti muutan halutun käytt�
 
 Kun paketin asennus oli jo opittu edellisissä harjoitustehtävissä, niin hyödynsin osaamistani tähän.
 
-Edit: 5.4.2017
+### Edit: 5.4.2017
 
-Muutettu logiikka niin, että käytetään template tiedostoa, joka sisältää globaalit käyttäjäasetuset. Nämä kopioidaan /etc kansion alle.
+Muutettu logiikka niin, että käytetään template tiedostoa, joka sisältää globaalit käyttäjäasetuset. Nämä kopioidaan /etc kansion alle. Käyttäjäkohtaiset asetukset voidaan joko määritellä suoraan moduuliin, [toiseen scriptiin](esim. (...../doBase.sh)
 
-~~
-Mutta itse konfiguraation tiedoston kopiointi olikin haastavampi homma. En tahtonut oikein millään käsittää source syntaxin toimivuutta, koska siitä oli yllättävän vähän hyviä esimerkkejä, tai minä en ainakaan niitä löytänyt. Lopuksi onneksi löysin sivuston, jonka avulla aikani testattuani löysin oikean kombinaation.
+~~Mutta itse konfiguraation tiedoston kopiointi olikin haastavampi homma. En tahtonut oikein millään käsittää source syntaxin toimivuutta, koska siitä oli yllättävän vähän hyviä esimerkkejä, tai minä en ainakaan niitä löytänyt. Lopuksi onneksi löysin sivuston, jonka avulla aikani testattuani löysin oikean kombinaation.~~
 
-Ongelmana oli se, että en tajunnut laittaa file:/// <-- 3x / merkkiä ja en tajunnut laittaa koko polkua vaan oletin, että pelkkä /modules/git/files olisi riittänyt, kuten puppet docs (https://docs.puppet.com/puppet/latest/type.html#package) lähteen esimerkissä käytetään.
+~~Ongelmana oli se, että en tajunnut laittaa file:/// <-- 3x / merkkiä ja en tajunnut laittaa koko polkua vaan oletin, että pelkkä /modules/git/files olisi riittänyt, kuten puppet docs (https://docs.puppet.com/puppet/latest/type.html#package) lähteen esimerkissä käytetään.~~
 
-**Stackoverflow 2012. Sourcing Puppet files from outside of modules. Lähde: http://stackoverflow.com/questions/9518905/sourcing-puppet-files-from-outside-of-modules**
+~~**Stackoverflow 2012. Sourcing Puppet files from outside of modules. Lähde: http://stackoverflow.com/questions/9518905/sourcing-puppet-files-from-outside-of-modules**~~
 
-Halusin saavuttaa tilanteen, jossa tiedosto kopioidaan pakotetusti kotihakemistoon ja sille annetaan myös oikeat oikeudet.
-~~
+~~Halusin saavuttaa tilanteen, jossa tiedosto kopioidaan pakotetusti kotihakemistoon ja sille annetaan myös oikeat oikeudet.~~
 
 ```
 class git {
