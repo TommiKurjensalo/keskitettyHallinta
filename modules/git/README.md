@@ -27,7 +27,7 @@ Kun paketin asennus oli jo opittu edellisissä harjoitustehtävissä, niin hyöd
 
 ### Edit: 5.4.2017
 
-Muutettu logiikka niin, että käytetään template tiedostoa, joka sisältää globaalit käyttäjäasetuset. Nämä kopioidaan /etc kansion alle. Käyttäjäkohtaiset asetukset voidaan joko määritellä suoraan moduuliin, [toiseen scriptiin](esim. (...../doBase.sh)
+Muutettu logiikka niin, että käytetään template tiedostoa, joka sisältää globaalit käyttäjäasetuset. Nämä kopioidaan /etc kansion alle. Käyttäjäkohtaiset asetukset voidaan joko määritellä suoraan moduuliin, [toiseen scriptiin](..../doBase.sh)
 
 ~~Mutta itse konfiguraation tiedoston kopiointi olikin haastavampi homma. En tahtonut oikein millään käsittää source syntaxin toimivuutta, koska siitä oli yllättävän vähän hyviä esimerkkejä, tai minä en ainakaan niitä löytänyt. Lopuksi onneksi löysin sivuston, jonka avulla aikani testattuani löysin oikean kombinaation.~~
 
