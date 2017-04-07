@@ -1,18 +1,25 @@
 class sshd {
 
 	# Asennetaan paketti sshd, haluten tilan olevan installed
-	package { 'openssh-server':
-	ensure => 'installed',
+	package { "openssh-server":
+		ensure => "installed",
 	}
 
-	file { '/etc/ssh/sshd_config':
-		ensure => 'file',
-		content => 'template('sshd/sshd_config.erb'),
-	}
+        # Varmistetaan, että palvelu on varmasti päällä ja käynnistyy automaattisesti
+        service { "sshd":
+                enable => "true",
+                ensure => "running",
+                require => Package["openssh-server"],
+        }
 
-	exec { 'restart_sshd_service'
-		command => 'systemctl restart ssh',
+	# Määritetään sshd_config tiedostoon muutama tärkeä asetus
+	augeas { "sshd_config":
+		context => "/files/etc/ssh/sshd_config",
+		changes => [ 	"set PasswordAuthentication yes",
+				"set UsePAM yes",
+				"set PermitRootLogin no",
+			   ],
+		require => Package["openssh-server"],
+		notify => Service["sshd"],
 	}
-
 }
-
