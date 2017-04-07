@@ -61,7 +61,7 @@ Hyödynsin "uutta" käskyä löytämään paremmin ongelmakohdat.
   
 Näin sain rivit 16-24 näkyville.
 
-Lähde: With the Linux “cat” command, how do I show only certain lines by number 2016. Luettavissa:http://unix.stackexchange.com/questions/288521/with-the-linux-cat-command-how-do-i-show-only-certain-lines-by-number. Luettu: 7.4.2017.
+Lähde: With the Linux “cat” command, how do I show only certain lines by number 2016. Luettavissa: http://unix.stackexchange.com/questions/288521/with-the-linux-cat-command-how-do-i-show-only-certain-lines-by-number. Luettu: 7.4.2017.
 
 Ongelmana oli se, että ->
 
@@ -95,7 +95,8 @@ Varmistetaan, että ssh service on päällä
 	  $ service --status-all |grep ssh
 	    [ + ]  ssh
 
-Katsotaan sshd_config tiedoston sisältö
+Katsotaan sshd_config tiedoston sisältöä egrep käskyllä.
+Lähde: Search Multiple Words / String Pattern Using grep Command on Bash shell 2016. Luettavissa: https://www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/. Luettu: 7.4.2017.
 
 	  $ egrep -wi --color 'PasswordAuthentication|UsePam|PermitRootLogin' /etc/ssh/sshd_config 
 	  PermitRootLogin no
