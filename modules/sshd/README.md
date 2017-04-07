@@ -96,6 +96,7 @@ Varmistetaan, että ssh service on päällä
 	    [ + ]  ssh
 
 Katsotaan sshd_config tiedoston sisältöä egrep käskyllä.
+
 Lähde: Search Multiple Words / String Pattern Using grep Command on Bash shell 2016. Luettavissa: https://www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/. Luettu: 7.4.2017.
 
 	  $ egrep -wi --color 'PasswordAuthentication|UsePam|PermitRootLogin' /etc/ssh/sshd_config 
