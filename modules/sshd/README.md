@@ -20,6 +20,7 @@ Tavoitteeni oli:
 
 - Asentaa openssh-server
 - Määritellä perusasetukset
+- Testata toimivuus
 
 Lähde: Markdown Cheatsheet 2016. Luettavissa: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet. Luettu: 6.4.2017. 
 
@@ -27,7 +28,7 @@ Lähde: Markdown Cheatsheet 2016. Luettavissa: https://github.com/adam-p/markdow
 
 Loin ensin kansiot:
 
-	  sudo mkdir -p /etc/puppet/modules/sshd/manifests
+	 $ sudo mkdir -p /etc/puppet/modules/sshd/manifests
 
 Tämän jälkeen metsästin lähteiden avulla tietoa, että minkälaisen init.pp tiedoston sitä edes osaisi tehdä. Lopuksi löysin hyvän pohjan, josta lähdin eteenpäin. Siinä käytettiin hyödykseen `package`, `service` ja `augeas` resursseja.
 
@@ -42,7 +43,7 @@ Lähde: Puppet CookBook. Luettavissa: https://www.puppetcookbook.com/posts/exec-
 
 Testasin ajaa luotua moduuliani seuraavalla komennolla:
 
-	  sudo puppet apply -v -e 'class {"sshd":}' --noop
+	  $ sudo puppet apply -v -e 'class {"sshd":}' --noop
 
 Tietenkään hommat ei suoraan lähtenyt toimimaan, ja virheitä olivat:
 
@@ -72,10 +73,11 @@ Ongelmana oli se, että ->
 			         ],
 		require => Package["openssh-server"],
 		notify => 'Service["ssh"]', <-- Service käskyä ympäröi hipsut ' '
+	}
 
 Näiden ongelmien korjaamisen jälkeen moduuli asentui mukisematta.
 
-	  $sudo puppet apply -v -e 'class {"sshd":}'
+	  $ sudo puppet apply -v -e 'class {"sshd":}'
 	  Notice: Compiled catalog for lag-vm in environment production in 0.80 seconds
 	  Info: Applying configuration version '1491584244'
 	  Notice: /Stage[main]/Sshd/Package[openssh-server]/ensure: created
