@@ -1,6 +1,6 @@
 # !/bin/bash
 # LiveUSB alkuasetuksien asennus scripti
-# Versio 05042017.4
+# Versio 07042017.1
 
 # Poistetaan nykyinen apt repository lista ja lisätään uudet lähteet
 echo ""
@@ -38,5 +38,5 @@ echo "* Kopioidaan puppet moduulit ja config tiedosto *"
 echo "* Kopioidaan globaali gitconfig => /etc/gitconfig *"
 echo ""
 sudo cp -R modules/ /etc/puppet/modules
-sudo cp puppet.conf /etc/puppet/puppet.conf
-sudo cp ~/keskitettyHallinta/modules/git/templates/gitconfig.erb /etc/gitconfig
+sudo cp conf/puppet.conf /etc/puppet/puppet.conf
+sudo cp /modules/git/templates/gitconfig.erb /etc/gitconfig
