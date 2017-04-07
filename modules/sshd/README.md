@@ -52,7 +52,8 @@ Tietenkään hommat ei suoraan lähtenyt toimimaan, ja virheitä olivat:
 	  Warning: Could not find resource 'Augeas[openssh-server]' in parameter 'require'
 	  (at /etc/puppet/modules/sshd/manifests/init.pp:23)
 	  Notice: Compiled catalog for lag-vm in environment production in 0.84 seconds
-	  Error: Could not find dependent Service["sshd"] for Augeas[sshd_config] at /etc/puppet/modules/sshd/manifests		/init.pp:16
+	  Error: Could not find dependent Service["sshd"] for Augeas[sshd_config] at /etc/puppet/modules/sshd/manifest
+	  /init.pp:16
 
 Hyödynsin "uutta" käskyä löytämään paremmin ongelmakohdat.
 
