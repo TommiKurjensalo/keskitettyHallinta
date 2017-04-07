@@ -3,7 +3,7 @@
 Käytin alustana Oracle VM VirtualBox v5.1.18 virtuaaliympäristössä toimivaa 
 Xubuntu 16.10 32bit versiota.
 
-Tein tehtävää 6.4.2017 noin 2 tuntia ja 7.4.2017 noin 2 tuntia.
+Tein tehtävää 6.4.2017 noin 2 tuntia ja 7.4.2017 noin 3 tuntia.
 
 Etsiskelin netistä tietoa, että kuinka kyseisen toiminnon voisi toteuttaa ja huomasin, 
 että parametrejä ja vaihtoehtoja on runsaasti. Oikeastaan aivan liikaakin, mikäli haluaisi
