@@ -5,6 +5,8 @@ Xubuntu 16.10 32bit versiota.
 
 Tein tehtävää 6.4.2017 noin 2 tuntia ja 7.4.2017 noin 3 tuntia.
 
+Tarkoituksena oli kirjoittaa tämä teksti githubin markdown tekstinä (Markdown Cheatsheet 2016.).
+
 Etsiskelin netistä tietoa, että kuinka kyseisen toiminnon voisi toteuttaa ja huomasin, 
 että parametrejä ja vaihtoehtoja on runsaasti. Oikeastaan aivan liikaakin, mikäli haluaisi
 järkevässä ajassa tehtyä sshd levitystä.
@@ -22,8 +24,6 @@ Tavoitteeni oli:
 - Määritellä perusasetukset
 - Testata toimivuus
 
-Lähde: Markdown Cheatsheet 2016. Luettavissa: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet. Luettu: 6.4.2017. 
-
 # Moduulin teko
 
 Loin ensin kansiot:
@@ -32,11 +32,11 @@ Loin ensin kansiot:
 
 Tämän jälkeen metsästin lähteiden avulla tietoa, että minkälaisen init.pp tiedoston sitä edes osaisi tehdä. Lopuksi löysin hyvän pohjan, josta lähdin eteenpäin. Siinä käytettiin hyödykseen `package`, `service` ja `augeas` resursseja.
 
-Lähde: Ubuntu 16.04 LTS – How To Install and Configure SSH 2016. Luettavissa: http://linux-sys-adm.com/ubuntu-16.04-lts-how-to-install-and-configure-ssh/. Luettu: 6.4.2017
+(Create a simple puppet class to maintain sshd 2011).
 
-Lähde: Create a simple puppet class to maintain sshd 2011. Luettavissa: https://www.linuxsysadmintutorials.com/create-a-simple-puppet-class-to-maintain-sshd. Luettu: 6.4.2017.
+(Puppet CookBook).
 
-Lähde: Puppet CookBook. Luettavissa: https://www.puppetcookbook.com/posts/exec-onlyif.html. Luettu 6.4.2017.
+(Ubuntu 16.04 LTS – How To Install and Configure SSH 2016).
 
 
 # Ongelmat ja niiden selättäminen
@@ -61,7 +61,7 @@ Hyödynsin "uutta" käskyä löytämään paremmin ongelmakohdat.
   
 Näin sain rivit 16-24 näkyville.
 
-Lähde: With the Linux “cat” command, how do I show only certain lines by number 2016. Luettavissa: http://unix.stackexchange.com/questions/288521/with-the-linux-cat-command-how-do-i-show-only-certain-lines-by-number. Luettu: 7.4.2017.
+(With the Linux “cat” command, how do I show only certain lines by number 2016.)
 
 Ongelmana oli se, että ->
 
@@ -97,7 +97,8 @@ Varmistetaan, että ssh service on päällä
 
 Katsotaan sshd_config tiedoston sisältöä egrep käskyllä.
 
-Lähde: Search Multiple Words / String Pattern Using grep Command on Bash shell 2016. Luettavissa: https://www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/. Luettu: 7.4.2017.
+(Search Multiple Words / String Pattern Using grep Command on Bash shell 2016.)
+
 
 	  $ egrep -wi --color 'PasswordAuthentication|UsePam|PermitRootLogin' /etc/ssh/sshd_config 
 	  PermitRootLogin no
@@ -133,6 +134,20 @@ Yhteystestausta
 	  $ 
 
 DONE !
+
+# Lähteet
+
+Create a simple puppet class to maintain sshd 2011. Luettavissa: https://www.linuxsysadmintutorials.com/create-a-simple-puppet-class-to-maintain-sshd. Luettu: 6.4.2017.
+
+Markdown Cheatsheet 2016. Luettavissa: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet. Luettu: 6.4.2017. 
+
+Puppet CookBook. Luettavissa: https://www.puppetcookbook.com/posts/exec-onlyif.html. Luettu 6.4.2017.
+
+Search Multiple Words / String Pattern Using grep Command on Bash shell 2016. Luettavissa: https://www.cyberciti.biz/faq/searching-multiple-words-string-using-grep/. Luettu: 7.4.2017.
+
+Ubuntu 16.04 LTS – How To Install and Configure SSH 2016. Luettavissa: http://linux-sys-adm.com/ubuntu-16.04-lts-how-to-install-and-configure-ssh/. Luettu: 6.4.2017
+
+With the Linux “cat” command, how do I show only certain lines by number 2016. Luettavissa: http://unix.stackexchange.com/questions/288521/with-the-linux-cat-command-how-do-i-show-only-certain-lines-by-number. Luettu: 7.4.2017.
 
 ---
 Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
