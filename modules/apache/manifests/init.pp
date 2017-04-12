@@ -5,27 +5,25 @@ class apache {
 		ensure => "installed",
 		allowcdrom => true,
 	}
-	
-	file { "/etc/hosts":
-		ensure => "file",
-		content => template('apache/hosts.erb'),
-		notify => Service['apache2'],
-	}
 
-       file { "/etc/apache2/sites-available/001-kovaluu.com":
+	# Kopioidaan apache2 kansioon uusi virtuaalihosti
+       file { "/etc/apache2/sites-available/001-kovaluucom.conf":
                 ensure => "file",
                 content => template('apache/001-kovaluu.com.erb'),
         }
 
-	file { "/etc/apache2/sites-enabled/001-kovaluu.com":
+	# Luodaan linkki apache2 sites-available -> sites-enabled
+	file { "/etc/apache2/sites-enabled/001-kovaluucom.conf":
 		ensure => "link",
-		target => "/etc/apache2/sites-available/001-kovaluu.com",
+		target => "/etc/apache2/sites-available/001-kovaluucom.conf",
 	}
 
+	# Luodaan virtuaalihostille uusi kansio
 	file { "/var/www/kovaluu.com":
 		ensure => "directory",
 	}
 
+	# Kopioidaan virtuaalihostille uusi index.html
 	file { "/var/www/kovaluu.com/index.html":
 		ensure => "file",
 		content => template('apache/index.html.erb'),
