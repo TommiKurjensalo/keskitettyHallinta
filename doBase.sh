@@ -6,7 +6,7 @@
 echo ""
 echo "* Poistetaan nykyinen apt repository lista ja lisätään uudet lähteet *"
 echo ""
-sudo rm /etc/apt/sources.list
+sudo rm /etc/apt/sources.list && sudo touch /etc/apt/sources.list
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety main restricted universe multiverse"
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety-updates main restricted universe multiverse"
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety-security main restricted universe multiverse"
