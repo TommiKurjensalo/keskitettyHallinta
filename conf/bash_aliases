@@ -1,0 +1,8 @@
+# File: $HOME/.bash_aliases
+# Omat aliakset
+
+alias gclone='git clone https://github.com/TommiKurjensalo/keskitettyHallinta.git'
+alias gpush='git add . && git commit; git pull && git push'
+function apuppet () {
+	sudo puppet apply -e 'class {"'$1'":}' 
+}
