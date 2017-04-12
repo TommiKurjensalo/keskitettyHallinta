@@ -35,9 +35,16 @@ cd keskitettyHallinta/
 
 # Kopioidaan puppet moduulit ja config tiedosto
 echo ""
-echo "* Kopioidaan puppet moduulit ja config tiedosto *"
+echo "* Kopioidaan puppet moduulit ja config tiedostot *"
 echo "* Kopioidaan globaali gitconfig => /etc/gitconfig *"
 echo ""
 sudo cp -R ~/keskitettyHallinta/modules/ /etc/puppet/modules
 sudo cp ~/keskitettyHallinta/conf/puppet.conf /etc/puppet/puppet.conf
 sudo cp ~/keskitettyHallinta/modules/git/templates/gitconfig.erb /etc/gitconfig
+cp ~/keskitettyHallinta/conf/bash_aliases ~/.bash_aliases
+
+# Refreshataan ~/.bash_aliases
+echo ""
+echo "* Refreshataan ~/.bash_aliases *"
+echo ""
+source ~/.bash_aliases
