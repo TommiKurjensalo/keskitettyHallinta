@@ -37,6 +37,6 @@ echo ""
 echo "* Kopioidaan puppet moduulit ja config tiedosto *"
 echo "* Kopioidaan globaali gitconfig => /etc/gitconfig *"
 echo ""
-sudo cp -R modules/ /etc/puppet/modules
-sudo cp conf/puppet.conf /etc/puppet/puppet.conf
-sudo cp /modules/git/templates/gitconfig.erb /etc/gitconfig
+sudo cp -R ~/keskitettyHallinta/modules/ /etc/puppet/modules
+sudo cp ~/keskitettyHallinta/conf/puppet.conf /etc/puppet/puppet.conf
+sudo cp ~/keskitettyHallinta/modules/git/templates/gitconfig.erb /etc/gitconfig
