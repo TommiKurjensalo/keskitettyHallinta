@@ -16,17 +16,9 @@ Lataa tiedosto githubista komennolla:
 
 `$ wget https://raw.githubusercontent.com/TommiKurjensalo/keskitettyHallinta/master/doBase.sh`
 
-Lisää tiedostoon ajo-oikeudet: 
-
-`$ chmod u+x doBase.sh` 
-
-tai 
-
-`$ chmod 0744 doBase.sh`
-
 Lopuksi suoritetaan komento:
 
-`$ ./doBase.sh`
+`$ bash doBase.sh`
 
 ---
 Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
