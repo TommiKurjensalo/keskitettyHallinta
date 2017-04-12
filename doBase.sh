@@ -1,11 +1,12 @@
 # !/bin/bash
 # LiveUSB alkuasetuksien asennus scripti
-# Versio 07042017.1
+# Versio 12042017.2
 
 # Poistetaan nykyinen apt repository lista ja lisätään uudet lähteet
 echo ""
 echo "* Poistetaan nykyinen apt repository lista ja lisätään uudet lähteet *"
 echo ""
+sudo rm /etc/apt/sources.list
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety main restricted universe multiverse"
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety-updates main restricted universe multiverse"
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety-security main restricted universe multiverse"
