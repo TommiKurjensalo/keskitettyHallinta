@@ -98,3 +98,70 @@ Ja kun tarpeeksi montakertaa yrittää, niin löytyyhän se oikea syntaxi
 		<p>Terve, maailma! Tämä on Apachen nimipohjainen "virtuaalipalvelin"</p>
 	</body>
 	</html>
+
+# Puppet modulin tekoa
+
+Kopioin index.html ja sivun config tiedoston mallikappaleiksi.
+
+	$ cp /var/www/kovaluu.com/index.html /etc/puppet/modules/apache/templates/index.html.erb
+	$ cp /etc/apache2/sites-available/001-kovaluucom.conf /etc/puppet/modules/apache/templates/001-kovaluucom.conf.erb
+	
+	
+## init.pp luontia
+
+	class apache {
+
+		# Asennetaan paketti apache2, haluten tilan olevan installed
+		package { "apache2":
+			ensure => "installed",
+			allowcdrom => true,
+		}
+
+		# Kopioidaan apache2 kansioon uusi virtuaalihosti
+	       file { "/etc/apache2/sites-available/001-kovaluucom.conf":
+			ensure => "file",
+			content => template('apache/001-kovaluucom.erb'),
+		}
+
+		# Luodaan linkki apache2 sites-available -> sites-enabled
+		file { "/etc/apache2/sites-enabled/001-kovaluucom.conf":
+			ensure => "link",
+			target => "/etc/apache2/sites-available/001-kovaluucom.conf",
+		}
+
+		# Luodaan virtuaalihostille uusi kansio
+		file { "/var/www/kovaluu.com":
+			ensure => "directory",
+		}
+
+		# Kopioidaan virtuaalihostille uusi index.html
+		file { "/var/www/kovaluu.com/index.html":
+			ensure => "file",
+			content => template('apache/index.html.erb'),
+			notify => Service['apache2'],
+		}
+
+		# Varmistetaan, että palvelu on varmasti päällä ja käynnistyy automaattsesti
+		service { "apache2":
+			enable => "true",
+			ensure => "running",
+			require => Package["apache2"],
+		}
+    	}
+	
+Ongelmiakin toki oli, hetken aikaa sai taas testata tuota linkin tekoa. En tiedä mikä siinä on aina niin vaikeaa, että oikean syntaxin löytymisen kanssa saa hetken leikkiä. Mutta heti file { jälkeen tulee KOHDE ja target kohtaan tulee LÄHDE.
+
+Kun uusi etusivu on kopioitu, käynnistetään apache2 palvelu uusiksi, jotta uusi virtuaalihost conf latautuu.
+
+## Testausta
+
+Poistetaan apache hilut taustalta.
+
+	$ sudo apt-get remove -y apache2
+	$ sudo rm -rf /etc/apache2/
+	
+Ajetaan puppet moduuli
+
+	$ apuppet apache
+
+
