@@ -10,15 +10,19 @@ doBase.sh tekee seuraavat toimenpiteet:
 - Asennetaan git & puppet
 - Konfiguroidaan git global asetukset
 - Kloonataan keskitettyHallinta repository
-- Kopioidaan puppet moduulit ja config tiedosto
+- Kopioidaan: 
+   - globaali gitconfig => /etc/gitconfig bash_aliases 
+   - Luodaan /etc/puppet/modules kansio, JOS sitä ei ole olemassa
+- Tehdään linkki ~/keskitettyHallinta => /etc/puppet/modules
+- Refreshataan ~/.bash_aliases 
 
 Lataa tiedosto githubista komennolla:
 
-`$ wget https://raw.githubusercontent.com/TommiKurjensalo/keskitettyHallinta/master/doBase.sh`
+    $ wget https://raw.githubusercontent.com/TommiKurjensalo/keskitettyHallinta/master/doBase.sh
 
 Lopuksi suoritetaan komento:
 
-`$ bash doBase.sh`
+     $ bash doBase.sh
 
 ---
 Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
