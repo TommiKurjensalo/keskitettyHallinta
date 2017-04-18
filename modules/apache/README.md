@@ -167,7 +167,7 @@ Ajetaan puppet moduuli
 	Notice: Compiled catalog for lag-vm in environment production in 1.51 seconds
 	Error: Parameter path failed on File[../sites-enabled/001-kovaluucom.conf]: File paths must be fully qualified, not 		'../sites-enabled/001-kovaluucom.conf' at /etc/puppet/modules/apache/manifests/init.pp:16
 
-Ei nähtävästi tehdä tällä tavalla, vaan koko linkki pitää olla kerrottuna. Tehdään siis muutos
+Ei nähtävästi tehdä tällä tavalla, vaan koko linkki pitää olla kerrottuna. Tehdään siis testimuutos
 
 	$ sudoedit /etc/puppet/modules/apache/manifests/init.pp
 	
@@ -176,11 +176,13 @@ Ei nähtävästi tehdä tällä tavalla, vaan koko linkki pitää olla kerrottun
 		# Luodaan linkki apache2 sites-available -> sites-enabled
 		file { "/etc/apache2/sites-enabled/001-kovaluucom.conf":
 			ensure => "link",
-			target => "/etc/apache2/sites-available/001-kovaluucom.conf",
+			target => "../sites-available/001-kovaluucom.conf",
 		}
 	</otettu oikea kohta>
 
 Uusi yritys ja, vóil....han kökkö..
+
+Nyt meni linkin teko läpi, mutta sitten tuli uusia virheitä.
 
 	Notice: Compiled catalog for lag-vm in environment production in 1.50 seconds
 	Notice: /Stage[main]/Apache/Package[apache2]/ensure: created
@@ -190,6 +192,26 @@ Uusi yritys ja, vóil....han kökkö..
 	See "systemctl status apache2.service" and "journalctl -xe" for details.
 	Error: /Stage[main]/Apache/Service[apache2]/ensure: change from stopped to running failed: Could not start Service[apache2]: Execution of '/bin/systemctl start apache2' returned 1: Job for apache2.service failed because the control process exited with error code.
 	See "systemctl status apache2.service" and "journalctl -xe" for details.
+
+Tunnillahan tästä puhuttiin ja hetken aikaa googlailtuani löysin oikean kohdan, joka on service resurssin provider attribuutti
+
+testasin niin systemd kuin debian vaihtoehtoa, mutta siltikin tuli herjaa, tosin herja hiukan muuttui. (Resource Type: service 2017.)
+
+	Error: Could not start Service[apache2]: Execution of '/etc/init.d/apache2 start' returned 1: /etc/init.d/apache2: 46: .: Can't open /etc/apache2/envvars
+	Starting apache2 (via systemctl): apache2.serviceJob for apache2.service failed because the control process exited with error code.
+	See "systemctl status apache2.service" and "journalctl -xe" for details.
+	 failed!
+	Error: /Stage[main]/Apache/Service[apache2]/ensure: change from stopped to running failed: Could not start Service[apache2]: Execution of '/etc/init.d/apache2 start' returned 1: /etc/init.d/apache2: 46: .: Can't open /etc/apache2/envvars
+	Starting apache2 (via systemctl): apache2.serviceJob for apache2.service failed because the control process exited with error code.
+	See "systemctl status apache2.service" and "journalctl -xe" for details.
+	 failed!
+
+
+
+
+Resource Type: service 2017. Luettavissa: https://docs.puppet.com/puppet/latest/types/service.html#service-attribute-provider. Luettu 18.4.2017.
+
+puppet service enable broken on ubuntu vivid with debian provider 2015.Luettavissa: https://bugs.launchpad.net/ubuntu/+source/puppet/+bug/1495853. Luettu 18.4.2017.
 
 
 
