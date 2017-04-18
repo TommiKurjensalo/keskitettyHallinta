@@ -109,6 +109,7 @@ Kopioin index.html ja sivun config tiedoston mallikappaleiksi.
 	
 ## init.pp luontia
 
+	$ sudoedit /etc/puppet/modules/apache/manifests/init.pp
 	class apache {
 
 		# Asennetaan paketti apache2, haluten tilan olevan installed
@@ -163,5 +164,32 @@ Poistetaan apache hilut taustalta.
 Ajetaan puppet moduuli
 
 	$ apuppet apache
+	Notice: Compiled catalog for lag-vm in environment production in 1.51 seconds
+	Error: Parameter path failed on File[../sites-enabled/001-kovaluucom.conf]: File paths must be fully qualified, not 		'../sites-enabled/001-kovaluucom.conf' at /etc/puppet/modules/apache/manifests/init.pp:16
+
+Ei nähtävästi tehdä tällä tavalla, vaan koko linkki pitää olla kerrottuna. Tehdään siis muutos
+
+	$ sudoedit /etc/puppet/modules/apache/manifests/init.pp
+	
+	<otettu oikea kohta>
+	
+		# Luodaan linkki apache2 sites-available -> sites-enabled
+		file { "/etc/apache2/sites-enabled/001-kovaluucom.conf":
+			ensure => "link",
+			target => "/etc/apache2/sites-available/001-kovaluucom.conf",
+		}
+	</otettu oikea kohta>
+
+Uusi yritys ja, vóil....han kökkö..
+
+	Notice: Compiled catalog for lag-vm in environment production in 1.50 seconds
+	Notice: /Stage[main]/Apache/Package[apache2]/ensure: created
+	Notice: /Stage[main]/Apache/File[/etc/apache2/sites-available/001-kovaluucom.conf]/ensure: defined content as '{md5}8538f53963abb0bdac2871300db9124e'
+	Notice: /Stage[main]/Apache/File[/etc/apache2/sites-enabled/001-kovaluucom.conf]/ensure: created
+	Error: Could not start Service[apache2]: Execution of '/bin/systemctl start apache2' returned 1: Job for apache2.service failed because the control process exited with error code.
+	See "systemctl status apache2.service" and "journalctl -xe" for details.
+	Error: /Stage[main]/Apache/Service[apache2]/ensure: change from stopped to running failed: Could not start Service[apache2]: Execution of '/bin/systemctl start apache2' returned 1: Job for apache2.service failed because the control process exited with error code.
+	See "systemctl status apache2.service" and "journalctl -xe" for details.
+
 
 
