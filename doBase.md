@@ -1,5 +1,7 @@
 # Perusasetuksien määrittely yhdellä komennolla
 
+(Muokattu 18.4.2017)
+
 Ideana on saada LiveUSB ympäristö haluttuun toimintakuntoon yhdellä tiedoston ajolla.
 
 Tämä on testattu 5.4.2017 Haaga-Helian labrassa 5004 PC numerolla 15 käyttäen LiveUSB tikkua.
