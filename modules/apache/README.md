@@ -1,6 +1,9 @@
 #  Package-File-Server. Asenna ja konfiguroi jokin demoni package-file-server -tyyliin.
 
--- koneen tiedot
+Käytin alustana Oracle VM VirtualBox v5.1.18 virtuaaliympäristössä toimivaa 
+Xubuntu 16.10 32bit versiota.
+
+Tein tehtävää 18.4.2017 noin 4 tuntia.
 
 Päätin asentaa apachen palvelun ja luoda sille virtuaalihostin. Luonnollisesti uusi sivu tarvitsee oman konfigurointi tiedostonsa ja myös uuden etusivun.
 
@@ -128,6 +131,7 @@ Kopioin index.html ja sivun config tiedoston mallikappaleiksi.
 		file { "/etc/apache2/sites-enabled/001-kovaluucom.conf":
 			ensure => "link",
 			target => "/etc/apache2/sites-available/001-kovaluucom.conf",
+			notify => Service["apache2"],
 		}
 
 		# Luodaan virtuaalihostille uusi kansio
@@ -138,6 +142,7 @@ Kopioin index.html ja sivun config tiedoston mallikappaleiksi.
 		# Kopioidaan virtuaalihostille uusi index.html
 		file { "/var/www/kovaluu.com/index.html":
 			ensure => "file",
+			mode => "0644",
 			content => template('apache/index.html.erb'),
 			notify => Service['apache2'],
 		}
@@ -207,11 +212,64 @@ testasin niin systemd kuin debian vaihtoehtoa, mutta siltikin tuli herjaa, tosin
 	 failed!
 
 
+Selvisi, että suattaapi olla apachen poistossa ongelmia (Can't install apache2 again 2014). Eli ei muutakun ohjeiden mukaan poistamaan
 
+	$ sudo apt-get remove apache2
+	$ sudo apt-get purge apache2
+	$ sudo apt-get autoremove
+	
+Tämän jälkeen homma toimi paremmin, mutta huomasin, että syystä tai toisesta ei apache ollut käynnistynyt uudelleen, koska virtuaalihost ei toiminut suoraan. Vaan vaati erikseen `sudo service apache2 restart` käskyn.
+
+Tarkemmin tutkittuani löysin syyn.
+
+Olin muuttanut vhost conf tiedostoa ja se ei nähtävästi riittänyt syyksi käynnistää palvelua uusiksi, vaikka siinä on kyllä käsky notify.
+
+        # Luodaan linkki apache2 sites-available -> sites-enabled
+        file { "/etc/apache2/sites-enabled/001-kovaluucom.conf":
+                ensure => "link",
+                target => "../sites-available/001-kovaluucom.conf",
+                notify => Service["apache2"],
+        }
+
+Mutta kun tein muutoksen index.html tiedostoon, niin apache palvelu käynnistyi uudelleen
+
+        # Kopioidaan virtuaalihostille uusi index.html
+        file { "/var/www/kovaluu.com/index.html":
+                ensure => "file",
+                mode => "0644",
+                content => template("apache/index.html.erb"),
+                notify => Service["apache2"],
+        }
+
+
+	Notice: Compiled catalog for lag-vm in environment production in 0.85 seconds
+	Notice: /Stage[main]/Apache/File[/var/www/kovaluu.com/index.html]/content: content changed '{md5}a86fb3febdb3ed619f0dcd903b194a11' to '{md5}d0aa2fc76523b1e99805e9cfc6620c41'
+	--> Notice: /Stage[main]/Apache/Service[apache2]: Triggered 'refresh' from 1 events <--
+	Notice: Applied catalog in 2.41 seconds
+	
+Nyt service resurssissa on provider => "systemd" ja näyttäisi toimivan.
+
+        # Varmistetaan, että palvelu on varmasti päällä ja käynnistyy automaatt$
+        service { "apache2":
+                enable => "true",
+                ensure => "running",
+                provider => "systemd",
+                require => Package["apache2"],
+        }
+
+
+# Lähteet
+
+Can't install apache2 again 2014. Luettavissa: https://askubuntu.com/questions/451674/cant-install-apache2-again. Luettu: 18.4.2017.
+
+Puppet service enable broken on ubuntu vivid with debian provider 2015.Luettavissa: https://bugs.launchpad.net/ubuntu/+source/puppet/+bug/1495853. Luettu 18.4.2017.
 
 Resource Type: service 2017. Luettavissa: https://docs.puppet.com/puppet/latest/types/service.html#service-attribute-provider. Luettu 18.4.2017.
 
-puppet service enable broken on ubuntu vivid with debian provider 2015.Luettavissa: https://bugs.launchpad.net/ubuntu/+source/puppet/+bug/1495853. Luettu 18.4.2017.
+---
+Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
+
+Pohjana Tero Karvinen 2017: Palvelinten hallinta, http://terokarvinen.com
 
 
 
