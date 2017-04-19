@@ -29,7 +29,7 @@ Muokkasin uutta config tiedostoa. Alla vain rivit mitä muutin.
 
     user@linux:/etc/apache2/sites-available$ sudoedit 001-kovaluucom.conf
     
-    ServerName www.kovaluu.com
+    	  ServerName www.kovaluu.com
 	  ServerAlias kovaluu.com
 
 	  ServerAdmin admin@kovaluu.com
@@ -107,7 +107,7 @@ Ja kun tarpeeksi montakertaa yrittää, niin löytyyhän se oikea syntaxi
 Kopioin index.html ja sivun config tiedoston mallikappaleiksi.
 
 	$ cp /var/www/kovaluu.com/index.html /etc/puppet/modules/apache/templates/index.html.erb
-	$ cp /etc/apache2/sites-available/001-kovaluucom.conf /etc/puppet/modules/apache/templates/001-kovaluucom.conf.erb
+	$ cp /etc/apache2/sites-available/001-kovaluucom.conf /etc/puppet/modules/apache/templates/001-kovaluucom.erb
 	
 	
 ## init.pp luontia
