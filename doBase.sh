@@ -100,9 +100,9 @@ echo "* Ladataan ~/.bash_aliases uudelleen *"
 echo ""
 source ~/.bash_aliases
 
-# Refreshataan ~/.bash_aliases
+# Muutetaan näppäimistö suomenkieliseksi
 echo ""
-echo "* Ladataan ~/.bash_aliases uudelleen *"
+echo "* Muutetaan näppäimistö suomenkieliseksi *"
 echo ""
 
 setxkbmap fi
