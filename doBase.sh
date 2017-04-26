@@ -100,6 +100,19 @@ echo "* Ladataan ~/.bash_aliases uudelleen *"
 echo ""
 source ~/.bash_aliases
 
+# Refreshataan ~/.bash_aliases
+echo ""
+echo "* Ladataan ~/.bash_aliases uudelleen *"
+echo ""
+
+setxkbmap fi
+OUT=$?
+if [ $OUT = 0 ]; then
+  echo '***[ Muutettu näppäimistö suomenkieliseksi onnistuneesti ]***'
+else
+  echo '***[ Näppäimistön muutos suomenkieliseksi epäonnistui ]***'
+fi
+
 echo ""
 echo "*  .:[ VALMIS ]:.  *"
 echo ""
