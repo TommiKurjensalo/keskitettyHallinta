@@ -10,9 +10,9 @@ echo ""
 sudo rm /etc/apt/sources.list && sudo touch /etc/apt/sources.list
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '*** [ Poistetttu sources.list && luotu uusi ]***'
+  echo '*** [ Poistetttu sources.list && luotu uusi ] ***'
 else
-  echo '*** [ sources.list poisto epäonnistui ]***'
+  echo '*** [ sources.list poisto epäonnistui ] ***'
 fi
 
 sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety main restricted universe multiverse"
@@ -34,9 +34,9 @@ git config --global user.email "tommi.kurjensalo@myy.haaga-helia.fi"
 git config --global user.name "Tommi Kurjensalo"
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '***[ GIT asetukset konfiguroitu ]***'
+  echo '*** [ GIT asetukset konfiguroitu ] ***'
 else
-  echo '***[ GIT asetuksien konfigurointi epäonnistui ]***'
+  echo '*** [ GIT asetuksien konfigurointi epäonnistui ] ***'
 fi
 
 
@@ -60,37 +60,37 @@ echo ""
 sudo cp ~/keskitettyHallinta/conf/puppet.conf /etc/puppet/puppet.conf
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '***[ Kopioitu puppet.conf onnistuneesti ]***'
+  echo '*** [ Kopioitu puppet.conf onnistuneesti ] ***'
 else
-  echo '***[ puppet.conf kopioiminen epäonnistui ]***'
+  echo '*** [ puppet.conf kopioiminen epäonnistui ] ***'
 fi
 
 
 sudo cp ~/keskitettyHallinta/modules/git/templates/gitconfig.erb /etc/gitconfig
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '***[ Kopioitu /etc/gitconfig onnistuneesti ]***'
+  echo '*** [ Kopioitu /etc/gitconfig onnistuneesti ] ***'
 else
-  echo '***[ /etc/gitconfig kopioiminen epäonnistui ]***'
+  echo '*** [ /etc/gitconfig kopioiminen epäonnistui ] ***'
 fi
 
 cp ~/keskitettyHallinta/conf/bash_aliases ~/.bash_aliases
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '***[ Kopioitu ~./bash_aliases onnistuneesti ]***'
+  echo '*** [ Kopioitu ~./bash_aliases onnistuneesti ] ***'
 else
-  echo '***[ ~/.bash_aliases kopioiminen epäonnistui ]***'
+  echo '*** [ ~/.bash_aliases kopioiminen epäonnistui ] ***'
 fi
 
 
 # Tarkistetaan onko kohdehakemistoa olemassa, jos ei niin luodaan linkki
 if [ ! -d "/etc/puppet/modules" ]; then
  sudo ln -s ~/keskitettyHallinta/modules/ /etc/puppet/
- echo '***[ /etc/puppet/modules kansio luotu & tehty linkki  ]***'
+ echo '*** [ /etc/puppet/modules kansio luotu & tehty linkki  ] ***'
 else
  sudo mv -f /etc/puppet/modules/ /etc/puppet/oldModules/
  sudo ln -s ~/keskitettyHallinta/modules/ /etc/puppet/
- echo '***[ /etc/puppet/modules kansio nimetty uudelleen & linkki luotu  ]***'
+ echo '*** [ /etc/puppet/modules kansio nimetty uudelleen & linkki luotu  ] ***'
 fi
 
 
@@ -108,9 +108,9 @@ echo ""
 setxkbmap fi
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '***[ Muutettu näppäimistö suomenkieliseksi onnistuneesti ]***'
+  echo '*** [ Muutettu näppäimistö suomenkieliseksi onnistuneesti ] ***'
 else
-  echo '***[ Näppäimistön muutos suomenkieliseksi epäonnistui ]***'
+  echo '*** [ Näppäimistön muutos suomenkieliseksi epäonnistui ] ***'
 fi
 
 echo ""
