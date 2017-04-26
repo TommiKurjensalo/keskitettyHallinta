@@ -60,9 +60,9 @@ echo ""
 sudo cp ~/keskitettyHallinta/conf/puppet.conf /etc/puppet/puppet.conf
 OUT=$?
 if [ $OUT = 0 ]; then
-  echo '**[ Kopioitu puppet.conf onnistuneesti ]***'
+  echo '***[ Kopioitu puppet.conf onnistuneesti ]***'
 else
-  echo '**[ puppet.conf kopioiminen epäonnistui ]***'
+  echo '***[ puppet.conf kopioiminen epäonnistui ]***'
 fi
 
 
