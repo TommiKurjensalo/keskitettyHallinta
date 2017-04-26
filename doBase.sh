@@ -15,9 +15,9 @@ else
   echo '*** [ sources.list poisto epäonnistui ] ***'
 fi
 
-sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety main restricted universe multiverse"
-sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety-updates main restricted universe multiverse"
-sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ yakkety-security main restricted universe multiverse"
+sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse"
+sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse"
+sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse"
 
 # Asennetaan git & puppet
 echo ""
