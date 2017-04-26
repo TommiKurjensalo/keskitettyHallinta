@@ -16,7 +16,8 @@ doBase.sh tekee seuraavat toimenpiteet:
    - globaali gitconfig => /etc/gitconfig bash_aliases 
    - Luodaan /etc/puppet/modules kansio, JOS sitä ei ole olemassa
 - Tehdään linkki ~/keskitettyHallinta => /etc/puppet/modules
-- Refreshataan ~/.bash_aliases 
+- Refreshataan ~/.bash_aliases
+- Muutetaan näppäimistö suomenkieliseksi
 
 Lataa tiedosto githubista komennolla:
 
