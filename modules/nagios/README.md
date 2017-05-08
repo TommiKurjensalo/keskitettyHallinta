@@ -5,9 +5,11 @@ Tarkoituksena on asentaa LAMP, NAGIOS ja luoda niille ainakin perusmääritykset
 Harjoituksen vaihe 1 tehtiin Haaga-Helia Pasilan luokassa 5004 PC 15. 
 Käyttöjärjestelmänä toimi Xubuntu 16.04.2, joka pyöri usb-tikulta live-tilassa.
 
+Kotona käytän Docker for Windows v 17.03.1-ce työkalua, jolla olen luonut puppetmaster ja puppetagent kontteja (container).
+Eli käytännössä sama kuin käyttäisi vagranttia, mutta Dockerin avulla voi tehdä paljon muutakin.
 
 Hyvä lopputulos olisi se, että nagioksen sivulle pääsisi kiinni ja siellä olisi
-ainakin 1 kone, jota valvotaan, että kone on päällä.
+ainakin 1 kone, jota valvotaan, että kone on päällä. Katsotaan kuinka pitkälle pääsen.
 Tähän käytetään nagioksen ping toimintoa.
 
 ## Vaihe 1 - Moduulin luominen, ohjelmien asentaminen ja käyttäjän luominen
@@ -67,19 +69,22 @@ Käytetään omaa apuppet aliasta, jotta voimme testata nykyhetken.
 	Notice: /Stage[main]/Nagios/User[nagios]/ensure: created
 	Notice: Finished catalog run in 53.75 seconds
 
-## Varmistetaan vaihdeen 1 lopputulos
+## Varmistetaan vaihteen 1 lopputulos
 
 Tarkistetaan, että käyttäjä nagios on luotuna ja, että sillä ei voi kirjautua
-	$ cat /etc/passwd | grep nagios
+
+	$ cat /etc/passwd | grep nagios 
 	nagios:x:1000:1001:Nagios daemon user:/home/nagios:/usr/sbin/nologin
 
 Tarkistetaan, että käyttäjä nagios on ryhmissä nagcmd ja www-data
+
 	$ cat /etc/group |grep nagios
 	www-data:x:33:nagios <--
 	nagcmd:x:1000:nagios <--
 	nagios:x:1001: <-- käyttäjätunnus
 
 Asennetaan curl, jotta voidaan todentaa apache testisivun toiminta
+
 	$ sudo apt-get install -y curl
 	$ curl -I localhost
 	HTTP/1.1 200 OK
@@ -93,6 +98,7 @@ Asennetaan curl, jotta voidaan todentaa apache testisivun toiminta
 	Content-Type: text/html
 
 Katsotaan, että mysql palvelu on käynnissä
+
 	$ sudo systemctl status mysql
 	● mysql.service - MySQL Community Server
 	   Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)
