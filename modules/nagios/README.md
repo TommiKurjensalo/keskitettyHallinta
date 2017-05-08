@@ -12,6 +12,56 @@ Hyvä lopputulos olisi se, että nagioksen sivulle pääsisi kiinni ja siellä o
 ainakin 1 kone, jota valvotaan, että kone on päällä. Katsotaan kuinka pitkälle pääsen.
 Tähän käytetään nagioksen ping toimintoa.
 
+## Esivalmisteluita
+
+Loin ensin Dockerfile tiedoston, jonne tein perusmääritykset nagios konetta varten. Dockerin avullahan voisi toteuttaa saman kuin mitä nyt puppetilla olemme tekemässä, eli luomassa koneen, jossa on halutut toiminnot mahdollisimman automatisoituna.
+
+(Docker docs 2017.)
+
+Tiedoston sisältö
+
+	# Building from ubuntu 16.04-sshd
+	FROM ubuntu-sshd:16.04
+
+	# Installing prerequisites for nagios
+	RUN apt-get install -y wget build-essential apache2 php apache2-mod-php7.0 php-gd libgd-dev unzip tzdata
+
+	# Change timezone to Europe/Helsinki
+	RUN cp /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
+
+	# Downloading nagios core and required plugins
+	RUN cd /tmp \
+	&& wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.3.1.tar.gz#_ga=2.29079733.863927744.1494269411-1872685986.1494269380 \
+	&& wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz 
+
+	# Open port 80
+	EXPOSE 80
+
+
+Tämän jälkeen loin itse kontin (container), eli image/virtuaalikoneen, jota käytän.
+
+Tähän loin oman function powershelliä varten.
+
+	# Creating nagios container
+	function dnagios {
+	$kpl = 10
+	[string]$hosts = ""
+
+	  for ($i=1;$i -le $kpl;$i++) {
+	    $r = $i+2
+	    $hosts = $hosts + "--add-host=""puppetagent$i puppetagent$i.local"":172.17.0.$r "
+	  }
+
+	$params = "--memory=""1024m"" --name nagios --detach --interactive --tty --hostname=""nagios nagios.local"" $hosts --add-host=""puppetmaster puppetmaster.local"":172.17.0.2 --ip 172.17.0.100 --publish 3080:80 --publish 3022:22 nagios_img"
+
+	$prms = $params.split(" ")
+	docker run $prms
+	}
+	
+Kun kone oli valmiina, aloitin ensin käymällä läpi nagioksen asennus dokumentaatiota ja asentamalla itse ohjelman. Tarkoituksena on kun siirtää agenttikoneelle vain binaryt ja config tiedostot. Eikä suorittaa kääntämistä kohdekoneella.
+
+(Nagios 2017.)
+
 ## Vaihe 1 - Moduulin luominen, ohjelmien asentaminen ja käyttäjän luominen
 
 Ensin tehdään uudet kansiot
@@ -128,8 +178,12 @@ Latasin netinstall.pp https://github.com/example42/puppi/blob/master/manifests/n
 Bitfield Consulting 2010. Puppet and MySQL: create databases and users.
 Luettavissa: http://bitfieldconsulting.com/puppet-and-mysql-create-databases-and-users. Luettu: 3.5.2017.
 
+Docker docs 2017. Dockerfile reference. Luettavissa: https://docs.docker.com/engine/reference/builder/. Luettu: 8.5.2017.
+
 Linode 2016. Install LAMP on Ubuntu 16.04.
 Luettavissa: https://www.linode.com/docs/web-servers/lamp/install-lamp-on-ubuntu-16-04. Luettu 3.5.2017.
+
+Nagios 2017. Nagios - Installing Nagios Core from Source. Luettavissa: https://assets.nagios.com/downloads/nagioscore/docs/Installing_Nagios_Core_From_Source.pdf#_ga=2.238731145.863927744.1494269411-1872685986.1494269380. Luettu 8.5.2017.
 
 Puppet Cookbook 2015. You want some resource examples.
 Luettavissa: https://www.puppetcookbook.com/posts/show-resources-with-ralsh.html. Luettu 3.5.2017.
