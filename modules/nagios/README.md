@@ -5,10 +5,62 @@ Tarkoituksena on asentaa LAMP, NAGIOS ja luoda niille ainakin perusmääritykset
 Harjoituksen vaihe 1 tehtiin Haaga-Helia Pasilan luokassa 5004 PC 15. 
 Käyttöjärjestelmänä toimi Xubuntu 16.04.2, joka pyöri usb-tikulta live-tilassa.
 
+Kotona käytän Docker for Windows v 17.03.1-ce työkalua, jolla olen luonut puppetmaster ja puppetagent kontteja (container).
+Eli käytännössä sama kuin käyttäisi vagranttia, mutta Dockerin avulla voi tehdä paljon muutakin.
 
 Hyvä lopputulos olisi se, että nagioksen sivulle pääsisi kiinni ja siellä olisi
-ainakin 1 kone, jota valvotaan, että kone on päällä.
+ainakin 1 kone, jota valvotaan, että kone on päällä. Katsotaan kuinka pitkälle pääsen.
 Tähän käytetään nagioksen ping toimintoa.
+
+## Esivalmisteluita
+
+Loin ensin Dockerfile tiedoston, jonne tein perusmääritykset nagios konetta varten. Dockerin avullahan voisi toteuttaa saman kuin mitä nyt puppetilla olemme tekemässä, eli luomassa koneen, jossa on halutut toiminnot mahdollisimman automatisoituna.
+
+(Docker docs 2017.)
+
+Tiedoston sisältö
+
+	# Building from ubuntu 16.04-sshd
+	FROM ubuntu-sshd:16.04
+
+	# Installing prerequisites for nagios
+	RUN apt-get install -y wget build-essential apache2 php apache2-mod-php7.0 php-gd libgd-dev unzip tzdata
+
+	# Change timezone to Europe/Helsinki
+	RUN cp /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
+
+	# Downloading nagios core and required plugins
+	RUN cd /tmp \
+	&& wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.3.1.tar.gz#_ga=2.29079733.863927744.1494269411-1872685986.1494269380 \
+	&& wget http://nagios-plugins.org/download/nagios-plugins-2.2.1.tar.gz 
+
+	# Open port 80
+	EXPOSE 80
+
+
+Tämän jälkeen loin itse kontin (container), eli image/virtuaalikoneen, jota käytän.
+
+Tähän loin oman function powershelliä varten.
+
+	# Creating nagios container
+	function dnagios {
+	$kpl = 10
+	[string]$hosts = ""
+
+	  for ($i=1;$i -le $kpl;$i++) {
+	    $r = $i+2
+	    $hosts = $hosts + "--add-host=""puppetagent$i puppetagent$i.local"":172.17.0.$r "
+	  }
+
+	$params = "--memory=""1024m"" --name nagios --detach --interactive --tty --hostname=""nagios nagios.local"" $hosts --add-host=""puppetmaster puppetmaster.local"":172.17.0.2 --ip 172.17.0.100 --publish 3080:80 --publish 3022:22 nagios_img"
+
+	$prms = $params.split(" ")
+	docker run $prms
+	}
+	
+Kun kone oli valmiina, aloitin ensin käymällä läpi nagioksen asennus dokumentaatiota ja asentamalla itse ohjelman. Tarkoituksena on kun siirtää agenttikoneelle vain binaryt ja config tiedostot. Eikä suorittaa kääntämistä kohdekoneella.
+
+(Nagios 2017.)
 
 ## Vaihe 1 - Moduulin luominen, ohjelmien asentaminen ja käyttäjän luominen
 
@@ -67,19 +119,22 @@ Käytetään omaa apuppet aliasta, jotta voimme testata nykyhetken.
 	Notice: /Stage[main]/Nagios/User[nagios]/ensure: created
 	Notice: Finished catalog run in 53.75 seconds
 
-## Varmistetaan vaihdeen 1 lopputulos
+## Varmistetaan vaihteen 1 lopputulos
 
 Tarkistetaan, että käyttäjä nagios on luotuna ja, että sillä ei voi kirjautua
-	$ cat /etc/passwd | grep nagios
+
+	$ cat /etc/passwd | grep nagios 
 	nagios:x:1000:1001:Nagios daemon user:/home/nagios:/usr/sbin/nologin
 
 Tarkistetaan, että käyttäjä nagios on ryhmissä nagcmd ja www-data
+
 	$ cat /etc/group |grep nagios
 	www-data:x:33:nagios <--
 	nagcmd:x:1000:nagios <--
 	nagios:x:1001: <-- käyttäjätunnus
 
 Asennetaan curl, jotta voidaan todentaa apache testisivun toiminta
+
 	$ sudo apt-get install -y curl
 	$ curl -I localhost
 	HTTP/1.1 200 OK
@@ -93,6 +148,7 @@ Asennetaan curl, jotta voidaan todentaa apache testisivun toiminta
 	Content-Type: text/html
 
 Katsotaan, että mysql palvelu on käynnissä
+
 	$ sudo systemctl status mysql
 	● mysql.service - MySQL Community Server
 	   Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)
@@ -122,8 +178,12 @@ Latasin netinstall.pp https://github.com/example42/puppi/blob/master/manifests/n
 Bitfield Consulting 2010. Puppet and MySQL: create databases and users.
 Luettavissa: http://bitfieldconsulting.com/puppet-and-mysql-create-databases-and-users. Luettu: 3.5.2017.
 
+Docker docs 2017. Dockerfile reference. Luettavissa: https://docs.docker.com/engine/reference/builder/. Luettu: 8.5.2017.
+
 Linode 2016. Install LAMP on Ubuntu 16.04.
 Luettavissa: https://www.linode.com/docs/web-servers/lamp/install-lamp-on-ubuntu-16-04. Luettu 3.5.2017.
+
+Nagios 2017. Nagios - Installing Nagios Core from Source. Luettavissa: https://assets.nagios.com/downloads/nagioscore/docs/Installing_Nagios_Core_From_Source.pdf#_ga=2.238731145.863927744.1494269411-1872685986.1494269380. Luettu 8.5.2017.
 
 Puppet Cookbook 2015. You want some resource examples.
 Luettavissa: https://www.puppetcookbook.com/posts/show-resources-with-ralsh.html. Luettu 3.5.2017.
