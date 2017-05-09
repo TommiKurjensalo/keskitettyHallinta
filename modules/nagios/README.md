@@ -1,5 +1,7 @@
 # Nagios moduulin luonti
 
+# KESKEN
+
 Tarkoituksena on asentaa LAMP, NAGIOS ja luoda niille ainakin perusmääritykset.
 
 Harjoituksen vaihe 1 tehtiin Haaga-Helia Pasilan luokassa 5004 PC 15. 
@@ -52,16 +54,116 @@ Tähän loin oman function powershelliä varten.
 	    $hosts = $hosts + "--add-host=""puppetagent$i puppetagent$i.local"":172.17.0.$r "
 	  }
 
-	$params = "--memory=""1024m"" --name nagios --detach --interactive --tty --hostname=""nagios nagios.local"" $hosts --add-host=""puppetmaster puppetmaster.local"":172.17.0.2 --ip 172.17.0.100 --publish 3080:80 --publish 3022:22 nagios_img"
+	$params = "--memory=""1024m"" --name nagios --detach --interactive --tty --hostname=""nagios nagios.local"" $hosts --add-host=""puppetmaster puppetmaster.local"":172.17.0.2 --publish 3080:80 --publish 3022:22 nagios_img"
 
 	$prms = $params.split(" ")
 	docker run $prms
 	}
 	
-Kun kone oli valmiina, aloitin ensin käymällä läpi nagioksen asennus dokumentaatiota ja asentamalla itse ohjelman. Tarkoituksena on kun siirtää agenttikoneelle vain binaryt ja config tiedostot. Eikä suorittaa kääntämistä kohdekoneella.
+Kun kone oli valmiina, aloitin ensiksi käymällä läpi nagioksen asennus dokumentaation ja asentamalla itse ohjelman. Tarkoituksena on kun siirtää agenttikoneelle vain binaryt ja config tiedostot. Eikä suorittaa kääntämistä kohdekoneella.
 
 (Nagios 2017.)
 
+## Nagioksen asennus
+
+	nagios:/tmp$ sudo useradd nagios && sudo groupadd nagcmd
+	nagios:/tmp$ sudo usermod -a -G nagcmd nagios
+	nagios:/tmp$ sudo usermod -a -G nagios,nagcmd www-data
+
+Muutan /tmp kansion oikeuksia, jotta ei tarvitse niinpaljoa sudotella.
+
+	insp@nagios:/tmp$ sudo chmod 777 -R /tmp/* 
+
+Puretaan tervapallot
+
+	insp@nagios:/tmp$ tar zxvf nagios-4.3.1.tar.gz && tar zxvf nagios-plugins-2.2.1.tar.gz
+	
+Mennään nagios kansioon ja ajetaan configure
+
+	insp@nagios:/tmp$ cd nagios-4.3.1
+	insp@nagios:/tmp/nagios-4.3.1$ sudo ./configure --with-command-group=nagcmd --with-mail=/usr/bin/sendmail --with-httpd-conf=/etc/apache2/
+	
+Asennetaan nagios
+
+	insp@nagios:/tmp/nagios-4.3.1$ sudo make all && sudo make install && sudo make install-init && sudo make install-config && sudo make install-commandmode && sudo make install-webconf
+	insp@nagios:/tmp/nagios-4.3.1$ sudo chown -R nagios:nagios /usr/local/nagios/libexec/eventhandlers /usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+	insp@nagios:/tmp/nagios-4.3.1$ sudo a2ensite nagios
+	ERROR: Site nagios does not exist!
+	insp@nagios:/tmp/nagios-4.3.1$ sudo a2enmod rewrite cgi
+	Enabling module rewrite.
+	AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to
+	Enabling module cgi.
+	To activate the new configuration, you need to run:
+	service apache2 restart
+
+a2ensite nagios aiheutti närää, koska huomasin että nagios.conf linkkaus ei onnistunut oikein.
+
+	--pätkästy
+	*** External command directory configured ***
+
+	/usr/bin/install -c -m 644 sample-config/httpd.conf /etc/apache2//nagios.conf
+	if [ 0 -eq 1 ]; then \
+			ln -s /etc/apache2//nagios.conf /etc/apache2/sites-enabled/nagios.conf; \
+	fi
+	--
+
+Loin siis fqdn.conf tiedoston ja tein linkin sille.
+
+	nagios:/etc/apache2/conf-available$ cat /etc/apache2/conf-available/fqdn.conf
+	 ServerName localhost
+	
+	nagios:/etc/apache2/conf-enabled$ sudo ln -s ../conf-available/fqdn.conf /etc/apache2/conf-enabled/fqdn.conf
+	nagios:/etc/apache2/conf-enabled$ sudo /etc/init.d/apache2 restart
+
+Näin ollen ei enää virheilmoituksia ilmennyt.
+
+Loin nagiosadmin web käyttäjätunnuksen ja annoin sille salasanan
+
+	nagios:/$ sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin	
+	New password:
+	Re-type new password:
+	Adding password for user nagiosadmin
+
+## Asennetaan nagios pluginit
+
+	nagios:/$ cd /tmp/nagios-plugins-2.2.1
+	nagios:/tmp/nagios-plugins-2.2.1$ sudo ./configure --with-nagios-user=nagios --with-nagios-group=nagios
+	nagios:/tmp/nagios-plugins-2.2.1$ sudo make && sudo make install
+	
+Jos nagioksen haluaa käynnistymään automaattisesti aja seuraava komento
+
+	nagios:/$ sudo update-rc.d nagios defaults
+	
+Käynnistetään nagios palvelus
+
+	nagios:/$ sudo service nagios start
+	
+Testataan toimivuus
+
+	nagios:/$ curl --user nagiosadmin:xxxx localhost/nagios/
+	
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+	
+	<html>
+	<head>
+			<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+	<script LANGUAGE="javascript">
+			var n = Math.round(Math.random() * 10000000000);
+			document.write("<title>Nagios Core on " + window.location.hostname + "</title>");
+			document.cookie = "NagFormId=" + n.toString(16);
+	</script>
+			<link rel="shortcut icon" href="images/favicon.ico" type="image/ico">
+	</head>
+
+.. Homma toimii!
+
+Seuraavaksi olisi hyvä hetki katsoa, että mitä kaikkea tietoa tarvitsee siirtää uuteen koneeseen, jotta nagioksen voi helposti
+siirtää ilman kääntämistyötä.
+
+
+	
+	
+		
 ## Vaihe 1 - Moduulin luominen, ohjelmien asentaminen ja käyttäjän luominen
 
 Ensin tehdään uudet kansiot
@@ -160,6 +262,7 @@ Katsotaan, että mysql palvelu on käynnissä
 	May 03 11:02:51 xubuntu systemd[1]: Starting MySQL Community Server...
 	May 03 11:02:52 xubuntu systemd[1]: Started MySQL Community Server.
 
+	
 ## Vaihe 2 - Määrittelyjen lisäys palveluille
 
 Nyt kun ohjelmat on asennettu, voidaan tehdä määritykset, ottaa niistä määritystiedostot
@@ -177,6 +280,9 @@ Latasin netinstall.pp https://github.com/example42/puppi/blob/master/manifests/n
 
 Bitfield Consulting 2010. Puppet and MySQL: create databases and users.
 Luettavissa: http://bitfieldconsulting.com/puppet-and-mysql-create-databases-and-users. Luettu: 3.5.2017.
+
+DigitalOcean 2017. How To Install Python 3 and Set Up a Programming Environment on an Ubuntu 16.04 Server.
+Luettavissa: https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-an-ubuntu-16-04-server. Luettu: 9.5.2017.
 
 Docker docs 2017. Dockerfile reference. Luettavissa: https://docs.docker.com/engine/reference/builder/. Luettu: 8.5.2017.
 
