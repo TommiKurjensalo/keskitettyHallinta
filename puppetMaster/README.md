@@ -1,12 +1,12 @@
 # Puppet Master-slave luominen ja testaaminen
 
-# Puppet versio 3
+## Puppet versio 3
 
 Käytin alustana ubuntu 16.04.2 kontteja, jotka olen luonnut Docker for Windows versio 17.03.1-ce.
 
 Loin yhden puppetmaster koneen, jonka nimi on puppetmaster. Agenttien koneet on muotoa puppetagent1, puppetagent2...puppetagent10 asti.
 
-## PuppetMaster
+### PuppetMaster
 
 Varmistin, että puppet* palvelut on alhaalla.
 
@@ -148,7 +148,7 @@ Lisätään puppetagent pregmatch lohko takaisin..
 
 .. ja nyt toimii.. mystistä.
 
-## Puppetagent
+### Puppetagent
 
 Otetaan ensimmäinen puppetagent1 kone mukaan.
 
@@ -220,8 +220,8 @@ Eli ei muutakuin poistamaan certit.
 
 Sammutetaan ensin puppetagent
 	
-		$ sudo puppet agent --disable
-		$ sudo rm -rf /var/lib/puppet/ssl
+	$ sudo puppet agent --disable
+	$ sudo rm -rf /var/lib/puppet/ssl
 	
 Agentti takaisin päälle
 
@@ -301,6 +301,8 @@ Lopputulos
 	$ cat /tmp/welcome
 	Hello World from puppetagent2!
 
+### Autosign ominaisuus
+
 Luodaan masterille /etc/puppet/autosign.conf, jonne määritellään nodet jotka saavat automaattisesti sertifikaattinsa hyväksytyksi.
 Kopioidaan toimiva regexp rivi /etc/puppet/manifests/site.pp tiedostosta.
 
@@ -336,7 +338,8 @@ Puppetmasterilla
 	+ "puppetagent1.local" (SHA256) AA:7D:48:E1:92:7E:A2:B2:2A:C9:46:B7:FE:13:5B:02:1E:FE:0F:FB:C5:E7:EF:23:9E:3C:76:9C:E1:F9:95:01
 	+ "puppetagent2.local" (SHA256) FF:2B:23:8A:62:D2:E3:61:84:CD:1A:61:80:DD:54:5D:03:57:B0:E2:E0:FE:8E:79:19:5F:9B:C6:BC:22:28:60
 	+ "puppetagent3.local" (SHA256) F5:DC:EA:BA:72:A3:4D:DB:BB:A5:BB:E2:D5:D2:C8:97:07:69:71:D3:AD:8B:08:73:BF:87:AF:58:46:52:A3:C8
-	+ "puppetmaster.local" (SHA256) 8B:A8:8A:5A:09:CB:38:8A:75:31:60:06:82:AA:0F:18:06:3B:1E:FE:C0:2D:8A:E7:C7:FF:EB:FF:36:5B:1E:AE (alt names: "DNS:puppet puppetmaster puppetmaster.local", "DNS:puppetmaster.local")
+	+ "puppetmaster.local" (SHA256) 8B:A8:8A:5A:09:CB:38:8A:75:31:60:06:82:AA:0F:18:06:3B:1E:FE:C0:2D:8A:E7:C7:FF:EB:FF:36:5B:1E:AE (alt names: "DNS:puppet puppetmaster 
+	puppetmaster.local", "DNS:puppetmaster.local")
 
 Puppetagent3 on ilmestynyt onnistuneesti !
 
@@ -360,7 +363,7 @@ puppetmaster:/etc/puppet$ sudo puppet cert --list --all
 Nyt kannattaa kommentoida ulos autosign = true rivi puppet.conf tiedostosta.
 	
 	
-# Puppet versio 4 testailua
+## Puppet versio 4 testailua
  
 Käytin alustana [Oracle VM VirtualBox](https://www.virtualbox.org/) v5.1.18 virtuaaliympäristössä toimivaa [Xubuntu 16.10 32bit](http://se.archive.ubuntu.com/mirror/cdimage.ubuntu.com/xubuntu/releases/16.10/release/) versiota.
 
@@ -369,7 +372,7 @@ Aloittelin testailun noin 13 aikoihin ja lopettelin 24 aikoihin.
 
 Puppet client ja master versio=4.5.2 ja ruby_version=2.3.1.
 
-## Vagrantin asennus
+### Vagrantin asennus
 
       $ sudo apt-get install -y vagrant
 
@@ -387,7 +390,7 @@ Asennetaan virtuaalikoneen image
 
 Latauksessa kun nähtävästi kestää 3tuntia, niin käynnistän sitten toisen koneen liveusb tilassa.
 
-## Puppet-masterin asennus
+### Puppet-masterin asennus
 
       $ sudo apt-get -y install puppetmaster
 
@@ -401,7 +404,7 @@ Sammutin puppet-master palvelun, jotta voin tehdä asetusmuutoksia
       $ sudo puppet resource service puppet-master ensure=stopped
       $ sudoedit /etc/puppet/puppet.conf
 
-# Määrittelyä
+#### Määrittelyä
 
 Puppet.conf sisältö muutoksien jälkeen. Lisäsin dns_alt_names perään koneen nimeni ja 
 [agent] lohkon server tietoineen testausta varten.
@@ -430,13 +433,13 @@ Sitten ajoin testauksia, jotta näen toimiiko koko master-agent systeemi
 (Puppet Docs 2016c).
 
 
-## Agent koneen luonti
+### Agent koneen luonti
 
 Tein toisen virtuaalikoneen Oraclen VM VirtualBoxilla, käynnistin xubuntun liveusb tilassa.
 Määrittelin verkkokortit bridged tilaan, jotta sain reitittimen dhcp:ltä ip-osoitteen. Näin ollen kummatkin koneet
 näkevät toisensa ja pingi menee läpi.
 
-## Puppetin asennus
+### Puppetin asennus
 
       $ sudo apt-get update && sudo apt-get install -y puppet-agent
 
@@ -451,7 +454,7 @@ Palvelun sammutus ja uudelleen käynnistäminen
 
      $ sudo systemctl restart puppet-agent 
      
-### Herjat
+#### Herjat
 
  Paikallinen puppet agent ei vain löydä konekohtaisia määrityksiä
  
@@ -501,7 +504,7 @@ Tämä määrittää, että kaikille koneille ajetaan moduuli nimeltään hello,
 
 (Puppet Docs 2017.)
 
-## Sertifikaattien poisto palvelimelta
+### Sertifikaattien poisto palvelimelta
 
       $ sudo puppet resource service-master ensure=stopped
       $ sudo rm -r /var/lib/puppet/ssl
@@ -531,7 +534,7 @@ Luodaan koneen sertifikaatti
          (at /usr/lib/ruby/vendor_ruby/puppet/application/master.rb:210:in `main')
          Notice: Starting Puppet master version 4.5.2
 
-## Luodaan sertifikaatit agentille uudelleen
+### Luodaan sertifikaatit agentille uudelleen
 
 Sammutetaan puppet agent
 
@@ -582,7 +585,7 @@ Ja hetken päästä taas toimi ilman virheitä! Mutta ei kuitenkaan moduulit lat
 
 Taitaa olla resurssi pulaa ja joku kansiopolku ei nyt osu kohdalleen
 
-# Ongelmia
+## Ongelmia
 
 Palvelimen päässä oli herja /var/log/puppet/masterhttp.log
 
