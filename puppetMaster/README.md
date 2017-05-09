@@ -347,18 +347,18 @@ Puppetagent3 on ilmestynyt onnistuneesti !
 
 Masterilla sertifikaatti listausta
 
-puppetmaster:/etc/puppet$ sudo puppet cert --list --all
-+ "puppetagent1.local"  (SHA256) AA:7D:48:E1:92:7E:A2:B2:2A:C9:46:B7:FE:13:5B:02:1E:FE:0F:FB:C5:E7:EF:23:9E:3C:76:9C:E1:F9:95:01
-+ "puppetagent10.local" (SHA256) C4:F8:4E:24:91:0E:4F:25:6C:30:0D:4A:E1:88:6A:22:92:80:FD:6A:BF:07:65:E3:7F:E9:46:3F:0D:FE:80:FB
-+ "puppetagent2.local"  (SHA256) FF:2B:23:8A:62:D2:E3:61:84:CD:1A:61:80:DD:54:5D:03:57:B0:E2:E0:FE:8E:79:19:5F:9B:C6:BC:22:28:60
-+ "puppetagent3.local"  (SHA256) F5:DC:EA:BA:72:A3:4D:DB:BB:A5:BB:E2:D5:D2:C8:97:07:69:71:D3:AD:8B:08:73:BF:87:AF:58:46:52:A3:C8
-+ "puppetagent4.local"  (SHA256) 3F:B0:0B:29:E4:42:B2:3B:8B:3E:B6:33:6F:DF:A4:BA:0E:C4:58:C0:00:BC:0C:A9:9A:58:C5:BB:8E:DE:D4:1E
-+ "puppetagent5.local"  (SHA256) 1A:9D:6B:23:EC:28:40:44:84:A7:F9:EA:97:B6:BA:92:0F:74:15:C0:E3:CC:78:7C:B6:28:BE:A1:A6:D9:41:C7
-+ "puppetagent6.local"  (SHA256) 0F:89:D8:54:D7:4D:13:CD:68:3F:CB:1C:76:81:E1:B8:3B:2E:66:B8:85:2E:4A:E6:98:E8:54:02:92:3D:FD:A7
-+ "puppetagent7.local"  (SHA256) 7B:2A:EB:FC:31:C9:2F:78:81:79:D6:02:67:D0:C5:09:34:6D:CE:64:59:D9:1C:A4:71:05:A9:87:9E:8A:7E:E1
-+ "puppetagent8.local"  (SHA256) 65:68:65:8B:C6:2B:CB:2D:F2:6A:0A:3B:06:D7:E3:DC:DF:B6:93:FC:E4:A2:C9:ED:DA:65:17:BA:83:3A:1F:EA
-+ "puppetagent9.local"  (SHA256) 9F:50:2A:93:DB:06:31:AD:D6:96:56:20:41:D2:CC:67:C3:96:DB:C1:D5:4D:75:6D:BF:8F:9D:56:D3:67:BB:CE
-+ "puppetmaster.local"  (SHA256) 8B:A8:8A:5A:09:CB:38:8A:75:31:60:06:82:AA:0F:18:06:3B:1E:FE:C0:2D:8A:E7:C7:FF:EB:FF:36:5B:1E:AE (alt names: "DNS:puppet puppetmaster puppetmaster.local", "DNS:puppetmaster.local")
+	puppetmaster:/etc/puppet$ sudo puppet cert --list --all
+	+ "puppetagent1.local"  (SHA256) AA:7D:48:E1:92:7E:A2:B2:2A:C9:46:B7:FE:13:5B:02:1E:FE:0F:FB:C5:E7:EF:23:9E:3C:76:9C:E1:F9:95:01
+	+ "puppetagent10.local" (SHA256) C4:F8:4E:24:91:0E:4F:25:6C:30:0D:4A:E1:88:6A:22:92:80:FD:6A:BF:07:65:E3:7F:E9:46:3F:0D:FE:80:FB
+	+ "puppetagent2.local"  (SHA256) FF:2B:23:8A:62:D2:E3:61:84:CD:1A:61:80:DD:54:5D:03:57:B0:E2:E0:FE:8E:79:19:5F:9B:C6:BC:22:28:60
+	+ "puppetagent3.local"  (SHA256) F5:DC:EA:BA:72:A3:4D:DB:BB:A5:BB:E2:D5:D2:C8:97:07:69:71:D3:AD:8B:08:73:BF:87:AF:58:46:52:A3:C8
+	+ "puppetagent4.local"  (SHA256) 3F:B0:0B:29:E4:42:B2:3B:8B:3E:B6:33:6F:DF:A4:BA:0E:C4:58:C0:00:BC:0C:A9:9A:58:C5:BB:8E:DE:D4:1E
+	+ "puppetagent5.local"  (SHA256) 1A:9D:6B:23:EC:28:40:44:84:A7:F9:EA:97:B6:BA:92:0F:74:15:C0:E3:CC:78:7C:B6:28:BE:A1:A6:D9:41:C7
+	+ "puppetagent6.local"  (SHA256) 0F:89:D8:54:D7:4D:13:CD:68:3F:CB:1C:76:81:E1:B8:3B:2E:66:B8:85:2E:4A:E6:98:E8:54:02:92:3D:FD:A7
+	+ "puppetagent7.local"  (SHA256) 7B:2A:EB:FC:31:C9:2F:78:81:79:D6:02:67:D0:C5:09:34:6D:CE:64:59:D9:1C:A4:71:05:A9:87:9E:8A:7E:E1
+	+ "puppetagent8.local"  (SHA256) 65:68:65:8B:C6:2B:CB:2D:F2:6A:0A:3B:06:D7:E3:DC:DF:B6:93:FC:E4:A2:C9:ED:DA:65:17:BA:83:3A:1F:EA
+	+ "puppetagent9.local"  (SHA256) 9F:50:2A:93:DB:06:31:AD:D6:96:56:20:41:D2:CC:67:C3:96:DB:C1:D5:4D:75:6D:BF:8F:9D:56:D3:67:BB:CE
+	+ "puppetmaster.local"  (SHA256) 8B:A8:8A:5A:09:CB:38:8A:75:31:60:06:82:AA:0F:18:06:3B:1E:FE:C0:2D:8A:E7:C7:FF:EB:FF:36:5B:1E:AE (alt names: "DNS:puppet puppetmaster puppetmaster.local", "DNS:puppetmaster.local")
 
 Nyt kannattaa kommentoida ulos autosign = true rivi puppet.conf tiedostosta.
 	
