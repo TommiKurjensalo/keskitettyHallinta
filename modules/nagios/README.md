@@ -1,6 +1,6 @@
 # Nagios moduulin luonti
 
-Tarkoituksena on asentaa LAMP, NAGIOS ja luoda niille ainakin perusmääritykset.
+Tarkoituksena on asentaa apache, nagios ja luoda niille ainakin perusmääritykset.
 
 Harjoituksen vaihe 1 tehtiin Haaga-Helia Pasilan luokassa 5004 PC 15. 
 Käyttöjärjestelmänä toimi Xubuntu 16.04.2, joka pyöri usb-tikulta live-tilassa.
@@ -107,7 +107,11 @@ a2ensite nagios aiheutti närää, koska huomasin että nagios.conf linkkaus ei 
 	fi
 	--
 
-Loin siis fqdn.conf tiedoston ja tein linkin sille.
+Loin sitten linkin käsin.
+
+	nagios:/etc/apache2/conf-available$ ln -s /etc/apache2/sites-available/nagios.conf /etc/apache2/sites-enabled/nagios.conf
+	
+Loin myös fqdn.conf tiedoston ja tein linkin sille.
 
 	nagios:/etc/apache2/conf-available$ cat /etc/apache2/conf-available/fqdn.conf
 	 ServerName localhost
@@ -199,7 +203,7 @@ Eli seuraavat asiat pitää ottaa huomioon modulia tekiessä.
 - www-data käyttäjän liittäminen nagios ja nagcmd ryhmiin
 - nagios palvelun luonti
 
-Pakataan kansiot kokonaisineen hakemistoipolkuineen ja käytetään varmuudenvuoksi -p parametriä. Vaikka sitä nyt ei ehkä olisi tarvinnut.
+Pakataan kansiot kokonaisineen hakemistopolkuineen ja käytetään varmuudenvuoksi -p parametriä. Vaikka sitä nyt ei ehkä olisi tarvinnut.
 
 Ote tar --help ohjeistuksesta.
 -p, --preserve-permissions, --same-permissions
@@ -257,7 +261,7 @@ Näyttää toimivan, nyt voi siirtyä moduulin luomiseen, kun tietää työjärj
 
 Ensin tehdään uudet kansiot
 
-	$ sudo mkdir -p /etc/puppet/modules/nagios/{manifests,templates}
+	$ sudo mkdir -p /etc/puppet/modules/nagios/{manifests,templates,files}
 
 Sitten luodaan ensimmäinen vedos init.pp tiedostosta. 
 Tässä ei ole tarkoitus tehdä vielä kaikkia määrityksiä, vaan nähdä, että ohjelmat ylipäätäänsä 
@@ -599,13 +603,13 @@ Kommentoidaan provider rivi pois init.pp:stä ja lisätään rivi, joka luo ryhm
 	service { 'apache2':
                 enable          => 'true',
                 ensure          => 'running',
-#               provider        => 'systemd',
+	#           provider        => 'systemd',
                 require         => Package['apache2'],
         }
 	# Creating group and user for nagios
 	group { 'nagios': ensure => 'present' }
 
-Kopioidaan nagiosD /etc/init.d kansioon ja laitetaan näin testimielesäs 755 oikeudet.
+Kopioidaan nagiosD /etc/init.d kansioon ja laitetaan näin testimielessä 755 oikeudet.
 
 Lisätään tervapallon purkuun parametri --overwrite, koska apachen asennusjälkeen haluemme korvata oletus määritystiedostot omilla.
 	
@@ -816,8 +820,8 @@ Muutoksen jälkeen tuli uusia ilmoituksia.
 	Action 'configtest' failed.
 	The Apache error log may have more information.
 	
-Tarkoittanee sitä, että mods-enabled kansiossa on 2x samoja moduleita. Tämä johtunee siitä, että olen kopioinut koko /etc/apache2 kansion.
-Tästä voimme päätellä, että näin EI kannata tehdä.
+**Tarkoittanee sitä, että mods-enabled kansiossa on 2x samoja moduleita. Tämä johtunee siitä, että olen kopioinut koko /etc/apache2 kansion.
+Tästä voimme päätellä, että näin EI kannata tehdä.**
 
 Luon siis templatet vain oikeasti tärkeistä tiedostoista, jotka ovat apache2.conf, nagios.conf ja fqdn.conf.
 Lopuksi luon näistä linkit conf-available kansiosta conf-enabled kansioon.
@@ -916,7 +920,7 @@ Tässä lopullinen init.pp, jolla ei ongelmia ollut.
 	class nagios {
 	
 			# Run apt-get update before installing packages
-					exec { 'apt-update':
+			exec { 'apt-update':
 					command => '/usr/bin/apt-get update',
 			}
 
@@ -1122,3 +1126,8 @@ Superuser 2012. Install a source package with puppet.
 Luettavissa: https://superuser.com/questions/415047/install-a-source-package-with-puppet. Luettu 3.5.2017.
 
 Timjrobinson 2014. Puppet how to force apt-get update. Luettavissa: http://timjrobinson.com/puppet-how-to-force-apt-get-update/. Luettu: 10.5.2017.
+
+---
+Tätä dokumenttia saa kopioida ja muokata GNU General Public License (versio 2 tai uudempi) mukaisesti. http://www.gnu.org/licenses/gpl.html
+
+Pohjana Tero Karvinen 2017: Palvelinten hallinta, http://terokarvinen.com
