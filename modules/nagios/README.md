@@ -71,8 +71,10 @@ Kun kone oli valmiina, aloitin ensiksi käymällä läpi nagioksen asennus dokum
 	nagios:/tmp$ sudo usermod -a -G nagios,nagcmd www-data
 
 Muutan /tmp kansion oikeuksia, jotta ei tarvitse niinpaljoa sudotella.
+HUOM! VAIN TESTIKÄYTTÖÄ VARTEN, ÄLÄ LAITA 777 OIKEUKSIA TUOTANTOKONEESEEN.
+HUOM! MUOKATTU chmod käsky -> chm0d, JOTTA EI VAHINGOSSAKAAN AJETA KO. KÄSKYÄ
 
-	insp@nagios:/tmp$ sudo chmod 777 -R /tmp/* 
+	insp@nagios:/tmp$ sudo chm0d 777 -R /tmp/* 
 
 Puretaan tervapallot
 
