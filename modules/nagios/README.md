@@ -1004,9 +1004,9 @@ Tässä lopullinen init.pp, jolla ei ongelmia ollut.
 			# Creating link from apache2 auth_digest mods-available to mods-enabled
 			# Package apache2 needs to installed first
 			file { '/etc/apache2/mods-enabled/auth_digest.load':
-                ensure  => 'link',
-                target  => '../mods-available/auth_digest.load',
-                require => Package['apache2'],
+					ensure  => 'link',
+					target  => '../mods-available/auth_digest.load',
+					require => Package['apache2'],
 			}
 
 			# Changing apache2 to start automatically during bootup
@@ -1014,7 +1014,7 @@ Tässä lopullinen init.pp, jolla ei ongelmia ollut.
 			service { 'apache2':
 					enable    => 'true',
 					ensure    => 'running',
-	#               provider  => 'systemd',
+			#               provider  => 'systemd',
 					require   => Package['apache2'],
 			}
 
@@ -1059,7 +1059,7 @@ Tässä lopullinen init.pp, jolla ei ongelmia ollut.
 					path        => ['/bin', '/usr/bin', '/usr/lib'],
 					cwd         => '/tmp',
 					command     => 'tar xvpfz nagios-backup.tar.gz --overwrite -C /',
-	#               onlyif      => 'test -f nagios-backup.tar.gz && test -f /etc/init.d/apache2',
+			#               onlyif      => 'test -f nagios-backup.tar.gz && test -f /etc/init.d/apache2',
 					subscribe   => File['/tmp/nagios-backup.tar.gz'],
 					refreshonly => 'true',
 			}
@@ -1068,7 +1068,7 @@ Tässä lopullinen init.pp, jolla ei ongelmia ollut.
 			exec {'update_rcd':
 					path        => ['/bin', '/usr/bin', '/usr/lib', '/usr/sbin'],
 					command     => 'update-rc.d nagios defaults',
-	#               onlyif      => 'test -f /etc/init.d/nagios',
+			#               onlyif      => 'test -f /etc/init.d/nagios',
 					subscribe   => File['/etc/init.d/nagios'],
 					refreshonly => 'true',
 			}
@@ -1078,7 +1078,7 @@ Tässä lopullinen init.pp, jolla ei ongelmia ollut.
 			service { 'nagios':
 					enable    => 'true',
 					ensure    => 'running',
-	#               provider  => 'systemd',
+			#               provider  => 'systemd',
 					require   => Package['apache2'],
 			}
 
