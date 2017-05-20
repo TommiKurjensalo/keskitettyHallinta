@@ -71,8 +71,10 @@ Kun kone oli valmiina, aloitin ensiksi käymällä läpi nagioksen asennus dokum
 	nagios:/tmp$ sudo usermod -a -G nagios,nagcmd www-data
 
 Muutan /tmp kansion oikeuksia, jotta ei tarvitse niinpaljoa sudotella.
+HUOM! VAIN TESTIKÄYTTÖÄ VARTEN, ÄLÄ LAITA 777 OIKEUKSIA TUOTANTOKONEESEEN.
+HUOM! MUOKATTU chmod käsky -> chm0d, JOTTA EI VAHINGOSSAKAAN AJETA KO. KÄSKYÄ
 
-	insp@nagios:/tmp$ sudo chmod 777 -R /tmp/* 
+	insp@nagios:/tmp$ sudo chm0d 777 -R /tmp/* 
 
 Puretaan tervapallot
 
@@ -202,6 +204,7 @@ Eli seuraavat asiat pitää ottaa huomioon modulia tekiessä.
 - nagios käyttäjän liittäminen nagcmd ryhmään
 - www-data käyttäjän liittäminen nagios ja nagcmd ryhmiin
 - nagios palvelun luonti
+- apache conf ja moduuli linkkien luonti
 
 Pakataan kansiot kokonaisineen hakemistopolkuineen ja käytetään varmuudenvuoksi -p parametriä. Vaikka sitä nyt ei ehkä olisi tarvinnut.
 

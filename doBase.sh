@@ -1,6 +1,6 @@
 # !/bin/bash
 # LiveUSB alkuasetuksien asennus scripti
-# Versio 18042017.2
+# Versio 03052017.1
 
 # Poistetaan nykyinen apt repository lista ja lisätään uudet lähteet
 echo ""
@@ -15,9 +15,10 @@ else
   echo '*** [ sources.list poisto epäonnistui ] ***'
 fi
 
-sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ xenial main restricted universe multiverse"
-sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse"
-sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ xenial-security main restricted universe multiverse"
+CODENAME=$(grep "VERSION_CODENAME=" /etc/os-release |awk -F= {' print $2'}|sed s/\"//g)
+sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ "${CODENAME}" main restricted universe multiverse"
+sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ "${CODENAME}"-updates main restricted universe multiverse"
+sudo apt-add-repository "deb http://se.archive.ubuntu.com/ubuntu/ "${CODENAME}"-security main restricted universe multiverse"
 
 # Asennetaan git & puppet
 echo ""

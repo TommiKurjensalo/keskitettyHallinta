@@ -1,0 +1,4 @@
+- /usr/local/nagios kansion oikeudet väärin -> laitettava 0755
+- apache2 cgi moduuli ei ole enabloitu (a2enmod)
+- nagiosadmin salasana on vaihdettava
+- nagios palvelu ei mukamas ole käynnissä, johtunee cgi tuen puuttumisesta(?)
