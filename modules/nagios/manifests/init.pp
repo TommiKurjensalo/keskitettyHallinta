@@ -71,6 +71,21 @@ class nagios {
                 require => Package['apache2'],
         }
 
+	# Enabling cgi module
+	file { '/etc/apache2/mods-enabled/cgi.load':
+		ensure  => 'link',
+		target  => '../mods-available/cgi.load',
+		notify  => Service['apache2'],
+		require => Package['apache2'],
+        }
+	# Enabling rewrite module
+        file { '/etc/apache2/mods-enabled/rewrite.load':
+                ensure  => 'link',
+                target  => '../mods-available/rewrite.load',
+		notify  => Service['apache2'],
+                require => Package['apache2'],
+        }
+
 	# Fetching apache2.conf from master
 	# Package apache2 needs to installed first
 	# Notifying service apache2 for changes
@@ -95,7 +110,7 @@ class nagios {
 	service { 'apache2':
 		enable	  => 'true',
 		ensure	  => 'running',
-#		provider  => 'systemd',
+	#	provider  => 'systemd',
 		require	  => Package['apache2'],
 	}
 
@@ -105,8 +120,8 @@ class nagios {
 	
 	user { 'nagios': 
 		ensure	=> 'present', 
-		gid	=> '1001',
-		uid	=> '1001',
+	#	gid	=> '1001',
+	#	uid	=> '1001',
 		groups	=> [nagcmd, www-data], 
 		shell	=> '/usr/sbin/nologin',
 		comment => 'Nagios daemon user',
@@ -135,12 +150,18 @@ class nagios {
 		require => Package['apache2'],
         }
 
+	# Set nagios folder permissions
+	file { '/usr/local/nagios':
+		mode	=> '0755',
+		require => Exec['nagios-backup.tar.gz'],
+	}
+
 	# Unpacking nagios tarbal only if source changes
 	exec { 'nagios-backup.tar.gz':
 		path	    => ['/bin', '/usr/bin', '/usr/lib'],
 		cwd	    => '/tmp',
 		command	    => 'tar xvpfz nagios-backup.tar.gz --overwrite -C /',
-#		onlyif	    => 'test -f nagios-backup.tar.gz && test -f /etc/init.d/apache2',
+	#	onlyif	    => 'test -f nagios-backup.tar.gz && test -f /etc/init.d/apache2',
 		subscribe   => File['/tmp/nagios-backup.tar.gz'],
 		refreshonly => 'true',
 	}
@@ -149,9 +170,10 @@ class nagios {
         exec {'update_rcd':
                 path	    => ['/bin', '/usr/bin', '/usr/lib', '/usr/sbin'],
                 command	    => 'update-rc.d nagios defaults',
-#               onlyif	    => 'test -f /etc/init.d/nagios',
+	#       onlyif	    => 'test -f /etc/init.d/nagios',
 		subscribe   => File['/etc/init.d/nagios'],
 		refreshonly => 'true',
+		notify	    => Service['nagios'],
         }
 
         # Changing nagios to start automatically during bootup
@@ -159,7 +181,7 @@ class nagios {
         service { 'nagios':
                 enable	  => 'true',
                 ensure	  => 'running',
-#               provider  => 'systemd',
+	#	provider  => 'systemd',
 		require	  => Package['apache2'],
         }
 
